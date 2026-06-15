@@ -12,9 +12,9 @@ export default function TableOfContents({
   return (
     <div className="sticky top-10">
 
-      <h3 className="font-bold mb-6">
-        Contents
-      </h3>
+      <p className="font-bold mb-6">
+        Daftar Isi
+      </p>
 
       <ul className="space-y-4 text-sm text-gray-600">
 

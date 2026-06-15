@@ -7,10 +7,10 @@ export const authors = {
       'Early childhood education writer and preschool reviewer based in Singapore.',
 
     image:
-      '/images/authors/jefri.jpg',
+      '/images/authors/jefri.png',
 
     linkedin:
-      'https://linkedin.com',
+      'https://linkedin.com/in/jeyonata',
 
     twitter:
       'https://twitter.com',

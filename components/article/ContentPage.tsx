@@ -1,3 +1,8 @@
+import Callout from '@/components/mdx/Callouts'
+import SchoolSnapshot from '@/components/mdx/SchoolSnapshot'
+import ComparisonTable from '@/components/mdx/ComparisonTable'
+import FAQ from '@/components/mdx/FAQ'
+
 import { MDXRemote } from 'next-mdx-remote/rsc'
 
 import rehypeSlug from 'rehype-slug'
@@ -46,7 +51,7 @@ export default function ContentPage({
 
           {/* LEFT SIDEBAR */}
 
-          <aside className="hidden lg:block lg:col-span-3">
+          <aside className="hidden lg:block lg:col-span-2">
 
             <TableOfContents
               headings={headings}
@@ -56,34 +61,36 @@ export default function ContentPage({
 
           {/* MAIN CONTENT */}
 
-          <article className="col-span-12 lg:col-span-6">
+          <article className="col-span-12 lg:col-span-10">
 
-            <div className="prose prose-lg max-w-none prose-p:text-gray-800 prose-p:leading-8">
+            <div className="prose prose-lg max-w-none prose-p:my-4 prose-headings:mb-4">
 
               <MDXRemote
-                source={content}
-                options={{
-                  mdxOptions: {
-                    rehypePlugins: [
-                      rehypeSlug,
-                    ],
-                  },
-                }}
-              />
+  source={content}
+  components={{
+    Callout,
+    SchoolSnapshot,
+    ComparisonTable,
+    FAQ,
+  }}
+  options={{
+    mdxOptions: {
+      rehypePlugins: [
+        rehypeSlug,
+      ],
+    },
+  }}
+/>
 
             </div>
 
+<div className="mt-16">
+
+  <AuthorCard author={author} />
+
+</div>
+
           </article>
-
-          {/* RIGHT SIDEBAR */}
-
-          <aside className="hidden lg:block lg:col-span-3">
-
-            <AuthorCard
-              author={author}
-            />
-
-          </aside>
 
         </div>
 

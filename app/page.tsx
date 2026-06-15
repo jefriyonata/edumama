@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import Heading from '@/components/ui/Heading'
@@ -8,6 +9,15 @@ import {
   getAllReviews,
 } from '@/lib/mdx'
 
+export const metadata: Metadata = {
+
+  title:
+    'Tips Parenting dan Pendidikan Anak Usia Dini',
+
+  description:
+    'Temukan review preschool, panduan parenting, dan rekomendasi sekolah anak usia dini di Indonesia.',
+
+}
 export default function HomePage() {
 
   const articles = getAllArticles()

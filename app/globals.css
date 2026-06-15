@@ -25,3 +25,9 @@ h6 {
   font-family: var(--font-fraunces);
 
 }
+
+html {
+
+  scroll-behavior: smooth;
+
+}

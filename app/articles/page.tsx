@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import PostCard from '@/components/PostCard'
 
 import Container from '@/components/ui/Container'
