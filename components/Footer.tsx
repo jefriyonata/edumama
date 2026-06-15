@@ -63,6 +63,17 @@ export default function Footer() {
 
               </li>
 
+              <li>
+
+                <Link
+                  href="/tentang-kami"
+                  className="hover:text-white"
+                >
+                  Tentang Kami
+                </Link>
+
+              </li>
+
             </ul>
 
           </div>
