@@ -13,11 +13,11 @@ export default function Footer() {
 
           <div>
 
-            <h2 className="text-3xl font-bold mb-4">
+            <p className="text-3xl font-bold mb-4">
 
               Edumama
 
-            </h2>
+            </p>
 
             <p className="text-white/80 leading-7 text-sm max-w-sm">
 
@@ -33,11 +33,11 @@ export default function Footer() {
 
           <div>
 
-            <h3 className="uppercase tracking-[0.2em] text-sm mb-5">
+            <p className="uppercase tracking-[0.2em] text-sm mb-5">
 
               Explore
 
-            </h3>
+            </p>
 
             <ul className="space-y-3 text-sm text-white/80">
 
@@ -71,11 +71,11 @@ export default function Footer() {
 
           <div>
 
-            <h3 className="uppercase tracking-[0.2em] text-sm mb-5">
+            <p className="uppercase tracking-[0.2em] text-sm mb-5">
 
               About
 
-            </h3>
+            </p>
 
             <p className="text-sm text-white/80 leading-7">
 
