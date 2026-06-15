@@ -23,22 +23,27 @@ export default function PostCard({
         <div className="relative aspect-[4/3] overflow-hidden mb-6 bg-gray-100">
 
           <Image
-            src={frontmatter.image}
-            alt={frontmatter.title}
-            fill
-            className="object-cover group-hover:scale-105 transition duration-300"
-          />
+  src={
+    frontmatter.image ||
+    '/images/thumbnails/default-thumbnail.png'
+  }
+  alt={frontmatter.title}
+  fill
+  className="object-cover group-hover:scale-105 transition duration-300"
+/>
 
         </div>
 
       </Link>
 
-      <p className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-3">
+      <Link
+  href={`/category/${frontmatter.category}`}
+  className="inline-block text-xs uppercase tracking-[0.2em] text-gray-500 mb-3 hover:text-[#FA8072] transition"
+>
 
-        {frontmatter.category}
+  {frontmatter.category?.replace(/-/g, ' ')}
 
-      </p>
-
+</Link>
       <h3 className="text-3xl font-bold leading-tight mb-4">
 
         <Link

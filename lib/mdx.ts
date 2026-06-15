@@ -115,3 +115,17 @@ export function getAllReviews() {
 
   return reviews
 }
+
+export function getArticlesByCategory(
+  category: string
+) {
+
+  const articles =
+    getAllArticles()
+
+  return articles.filter(
+    (article) =>
+      article.frontmatter.category === category
+  )
+
+}

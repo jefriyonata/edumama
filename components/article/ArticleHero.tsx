@@ -1,3 +1,4 @@
+import Link from 'next/link'
 type ArticleHeroProps = {
   frontmatter: any
   author: any
@@ -13,11 +14,14 @@ export default function ArticleHero({
 
       <div className="max-w-5xl mx-auto px-6 py-28 text-center">
 
-        <p className="uppercase tracking-[0.25em] text-sm mb-8 opacity-80">
+        <Link
+  href={`/category/${frontmatter.category}`}
+  className="inline-block uppercase tracking-[0.25em] text-sm mb-8 opacity-80 hover:opacity-100 transition"
+>
 
-          {frontmatter.category}
+  {frontmatter.category?.replace(/-/g, ' ')}
 
-        </p>
+</Link>
 
         <h1 className="text-6xl font-bold leading-tight mb-8">
 
