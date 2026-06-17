@@ -16,6 +16,10 @@ export function getArticleBySlug(slug: string) {
     `${realSlug}.mdx`
   )
 
+  if (!fs.existsSync(fullPath)) {
+    return null
+  }
+
   const fileContents = fs.readFileSync(
     fullPath,
     'utf8'
@@ -73,6 +77,10 @@ export function getReviewBySlug(slug: string) {
     `${realSlug}.mdx`
   )
 
+  if (!fs.existsSync(fullPath)) {
+    return null
+  }
+
   const fileContents = fs.readFileSync(
     fullPath,
     'utf8'
@@ -114,6 +122,43 @@ export function getAllReviews() {
   })
 
   return reviews
+}
+
+export type Faq = {
+  question: string
+  answer: string
+}
+
+/**
+ * Extracts <FAQ question="...">answer</FAQ> blocks from MDX content
+ * so they can be emitted as FAQPage structured data. Strips basic
+ * markdown/HTML from the answer to keep it plain text.
+ */
+export function extractFaqs(content: string): Faq[] {
+
+  const faqRegex =
+    /<FAQ\s+question="([^"]*)"\s*>([\s\S]*?)<\/FAQ>/g
+
+  const faqs: Faq[] = []
+
+  let match: RegExpExecArray | null
+
+  while ((match = faqRegex.exec(content)) !== null) {
+
+    const question = match[1].trim()
+
+    const answer = match[2]
+      .replace(/<[^>]+>/g, ' ')      // strip HTML/JSX tags
+      .replace(/[*_`#>]/g, '')       // strip common markdown markers
+      .replace(/\s+/g, ' ')          // collapse whitespace
+      .trim()
+
+    if (question && answer) {
+      faqs.push({ question, answer })
+    }
+  }
+
+  return faqs
 }
 
 export function getArticlesByCategory(

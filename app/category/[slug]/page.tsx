@@ -10,6 +10,8 @@ import {
   getArticlesByCategory,
 } from '@/lib/mdx'
 
+import { buildMetadata } from '@/lib/seo'
+
 import {
   categories,
 } from '@/data/categories'
@@ -18,6 +20,12 @@ type CategoryPageProps = {
   params: Promise<{
     slug: string
   }>
+}
+
+export function generateStaticParams() {
+  return categories.map((category) => ({
+    slug: category.slug,
+  }))
 }
 
 export async function generateMetadata({
@@ -33,15 +41,11 @@ export async function generateMetadata({
         category.slug === slug
     )
 
-  return {
-
-    title:
-      category?.name || 'Category',
-
-    description:
-      `Artikel kategori ${category?.name} di Edumama.`,
-
-  }
+  return buildMetadata({
+    title: category?.name || 'Category',
+    description: `Artikel kategori ${category?.name} di Edumama.`,
+    path: `/category/${slug}`,
+  })
 
 }
 

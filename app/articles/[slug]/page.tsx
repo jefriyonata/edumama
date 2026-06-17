@@ -1,9 +1,26 @@
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import {
   getArticleBySlug,
+  getAllArticles,
+  extractFaqs,
 } from '@/lib/mdx'
 
 import ContentPage from '@/components/article/ContentPage'
+import JsonLd from '@/components/seo/JsonLd'
+import {
+  buildMetadata,
+  articleSchema,
+  breadcrumbSchema,
+  faqSchema,
+} from '@/lib/seo'
+import { authors, type AuthorKey } from '@/data/authors'
+
+export function generateStaticParams() {
+  return getAllArticles().map((article) => ({
+    slug: article.slug,
+  }))
+}
 
 export async function generateMetadata({
   params,
@@ -16,45 +33,24 @@ export async function generateMetadata({
   const article =
     getArticleBySlug(slug)
 
-  return {
-
-    title:
-      article.frontmatter.title,
-
-    description:
-      article.frontmatter.description,
-
-    openGraph: {
-
-      title:
-        article.frontmatter.title,
-
-      description:
-        article.frontmatter.description,
-
-      images: [
-        article.frontmatter.image,
-      ],
-
-    },
-
-    twitter: {
-
-      card: 'summary_large_image',
-
-      title:
-        article.frontmatter.title,
-
-      description:
-        article.frontmatter.description,
-
-      images: [
-        article.frontmatter.image,
-      ],
-
-    },
-
+  if (!article) {
+    notFound()
   }
+
+  const { title, description, image, date, author } =
+    article.frontmatter
+
+  return buildMetadata({
+    title,
+    description,
+    path: `/articles/${slug}`,
+    image,
+    type: 'article',
+    publishedTime: date,
+    authors: authors[author as AuthorKey]
+      ? [authors[author as AuthorKey].name]
+      : undefined,
+  })
 
 }
 export default async function ArticlePage({
@@ -68,10 +64,42 @@ export default async function ArticlePage({
   const article =
     getArticleBySlug(slug)
 
+  if (!article) {
+    notFound()
+  }
+
+  const { title, description, image, date, author } =
+    article.frontmatter
+
+  const path = `/articles/${slug}`
+
+  const faqs = extractFaqs(article.content)
+
+  const jsonLd = [
+    articleSchema({
+      title,
+      description,
+      path,
+      image,
+      datePublished: date,
+      authorName: authors[author as AuthorKey]?.name,
+    }),
+    breadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'Articles', path: '/articles' },
+      { name: title, path },
+    ]),
+    ...(faqs.length ? [faqSchema(faqs)] : []),
+  ]
+
   return (
-    <ContentPage
-      frontmatter={article.frontmatter}
-      content={article.content}
-    />
+    <>
+      <JsonLd data={jsonLd} />
+
+      <ContentPage
+        frontmatter={article.frontmatter}
+        content={article.content}
+      />
+    </>
   )
 }

@@ -1,10 +1,19 @@
+import type { Metadata } from 'next'
 import PostCard from '@/components/PostCard'
 
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import Heading from '@/components/ui/Heading'
 
+import { buildMetadata } from '@/lib/seo'
 import { getAllReviews } from '@/lib/mdx'
+
+export const metadata: Metadata = buildMetadata({
+  title: 'Reviews',
+  description:
+    'Review preschool dan program pendidikan anak usia dini dari Edumama.',
+  path: '/reviews',
+})
 
 export default function ReviewsPage() {
 

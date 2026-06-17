@@ -1,6 +1,10 @@
 import Link from 'next/link'
+import Image from 'next/image'
+import { navCategories } from '@/data/navigation'
 
 export default function Footer() {
+
+  const currentYear = new Date().getFullYear()
 
   return (
     <footer className="bg-[#FA8072] text-white mt-24">
@@ -13,11 +17,15 @@ export default function Footer() {
 
           <div>
 
-            <p className="text-3xl font-bold mb-4">
-
-              Edumama
-
-            </p>
+            <Link href="/" className="inline-block mb-5">
+              <Image
+                src="/images/edumama-logo-new.jpg"
+                alt="eduMama"
+                width={793}
+                height={276}
+                className="w-40 max-w-none h-auto"
+              />
+            </Link>
 
             <p className="text-white/80 leading-7 text-sm max-w-sm">
 
@@ -41,38 +49,18 @@ export default function Footer() {
 
             <ul className="space-y-3 text-sm text-white/80">
 
-              <li>
+              {navCategories.map((category) => (
+                <li key={category.href}>
 
-                <Link
-                  href="/articles"
-                  className="hover:text-white"
-                >
-                  Articles
-                </Link>
+                  <Link
+                    href={category.href}
+                    className="hover:text-white"
+                  >
+                    {category.label}
+                  </Link>
 
-              </li>
-
-              <li>
-
-                <Link
-                  href="/reviews"
-                  className="hover:text-white"
-                >
-                  Reviews
-                </Link>
-
-              </li>
-
-              <li>
-
-                <Link
-                  href="/tentang-kami"
-                  className="hover:text-white"
-                >
-                  Tentang Kami
-                </Link>
-
-              </li>
+                </li>
+              ))}
 
             </ul>
 
@@ -104,7 +92,7 @@ export default function Footer() {
         <div className="border-t border-white/20 mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/70">
 
           <p>
-            © 2026 Edumama. All rights reserved.
+            © {currentYear} Edumama. All rights reserved.
           </p>
 
           <p>

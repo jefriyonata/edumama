@@ -4,20 +4,20 @@ import Section from '@/components/ui/Section'
 import Heading from '@/components/ui/Heading'
 import PostCard from '@/components/PostCard'
 
+import { buildMetadata } from '@/lib/seo'
+
 import {
   getAllArticles,
   getAllReviews,
 } from '@/lib/mdx'
 
-export const metadata: Metadata = {
-
+export const metadata: Metadata = buildMetadata({
   title:
     'Tips Parenting dan Pendidikan Anak Usia Dini',
-
   description:
     'Temukan review preschool, panduan parenting, dan rekomendasi sekolah anak usia dini di Indonesia.',
-
-}
+  path: '/',
+})
 export default function HomePage() {
 
   const articles = getAllArticles()

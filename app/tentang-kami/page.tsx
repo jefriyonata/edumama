@@ -1,12 +1,16 @@
+import type { Metadata } from 'next'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import Heading from '@/components/ui/Heading'
 
-export const metadata = {
-  title: 'Tentang Kami | EduMama',
+import { buildMetadata } from '@/lib/seo'
+
+export const metadata: Metadata = buildMetadata({
+  title: 'Tentang Kami',
   description:
     'Kenali EduMama, platform yang membantu orang tua menemukan informasi preschool, kindergarten, dan pendidikan anak dengan lebih mudah.',
-}
+  path: '/tentang-kami',
+})
 
 export default function TentangKamiPage() {
   return (
