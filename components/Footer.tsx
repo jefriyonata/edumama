@@ -49,6 +49,12 @@ export default function Footer() {
 
             <ul className="space-y-3 text-sm text-white/80">
 
+              <li>
+                <Link href="/direktori" className="hover:text-white">
+                  Direktori
+                </Link>
+              </li>
+
               {navCategories.map((category) => (
                 <li key={category.href}>
 

@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     '',
+    '/direktori',
     '/articles',
     '/reviews',
     '/tentang-kami',

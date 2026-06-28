@@ -11,7 +11,7 @@ import { daycarePlaces } from '@/data/places/daycare'
 export type PlaceType =
   | 'daycare'
   | 'preschool'
-  | 'clinic'
+  | 'bimbel'
   | 'playground'
 
 export type Place = {
@@ -73,7 +73,7 @@ const allPlaces: Place[] = [
 export const placeTypeLabels: Record<PlaceType, string> = {
   daycare: 'Daycare',
   preschool: 'Preschool',
-  clinic: 'Klinik Anak',
+  bimbel: 'Bimbel',
   playground: 'Playground',
 }
 

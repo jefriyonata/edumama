@@ -5,8 +5,9 @@ import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import Heading from '@/components/ui/Heading'
 import JsonLd from '@/components/seo/JsonLd'
+import DirectoryExplorer from '@/components/directory/DirectoryExplorer'
 
-import { getCitiesForType } from '@/lib/places'
+import { getCitiesForType, getPlacesByType } from '@/lib/places'
 import {
   buildMetadata,
   breadcrumbSchema,
@@ -25,6 +26,7 @@ export const metadata: Metadata = buildMetadata({
 export default function DaycareDirectoryPage() {
 
   const cities = getCitiesForType(TYPE)
+  const places = getPlacesByType(TYPE)
 
   const jsonLd = [
     breadcrumbSchema([
@@ -60,31 +62,30 @@ export default function DaycareDirectoryPage() {
             </div>
 
             <p className="text-lg text-gray-600 max-w-3xl mb-10">
-              Telusuri tempat penitipan anak per kota — lengkap dengan
-              lokasi, kurikulum, rentang usia, fasilitas, dan kontak.
-              Pilih kota Anda untuk mulai membandingkan.
+              Telusuri tempat penitipan anak — lengkap dengan lokasi,
+              kurikulum, rentang usia, fasilitas, dan kontak. Saring
+              berdasarkan lokasi atau cari langsung.
             </p>
 
-            {cities.length === 0 ? (
-              <p className="text-gray-500">
-                Belum ada data. Segera hadir.
-              </p>
-            ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                {cities.map((c) => (
-                  <Link
-                    key={c.city}
-                    href={`/${TYPE}/${c.city}`}
-                    className="group border rounded-2xl p-5 bg-white shadow-sm hover:shadow-md hover:border-[#FA8072] transition"
-                  >
-                    <span className="block text-lg font-bold group-hover:text-[#FA8072] transition">
-                      {c.cityLabel}
-                    </span>
-                    <span className="text-sm text-gray-500">
-                      {c.count} daycare
-                    </span>
-                  </Link>
-                ))}
+            <DirectoryExplorer places={places} initialType={TYPE} />
+
+            {cities.length > 0 && (
+              <div className="mt-16 border-t pt-10">
+                <h2 className="text-sm uppercase tracking-[0.2em] text-gray-500 mb-5">
+                  Jelajahi per kota
+                </h2>
+                <div className="flex flex-wrap gap-3">
+                  {cities.map((c) => (
+                    <Link
+                      key={c.city}
+                      href={`/${TYPE}/${c.city}`}
+                      className="text-sm border rounded-full px-4 py-2 bg-white hover:border-[#FA8072] hover:text-[#FA8072] transition"
+                    >
+                      {c.cityLabel}{' '}
+                      <span className="text-gray-400">({c.count})</span>
+                    </Link>
+                  ))}
+                </div>
               </div>
             )}
 

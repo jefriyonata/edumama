@@ -161,6 +161,15 @@ export function extractFaqs(content: string): Faq[] {
   return faqs
 }
 
+/**
+ * Daycare listicles live in content/articles as `daycare-*.mdx` but are
+ * surfaced through the dedicated /daycare directory, so we keep them out
+ * of the category listings.
+ */
+function isDaycareListicle(slug: string) {
+  return slug.startsWith('daycare-')
+}
+
 export function getArticlesByCategory(
   category: string
 ) {
@@ -170,7 +179,8 @@ export function getArticlesByCategory(
 
   return articles.filter(
     (article) =>
-      article.frontmatter.category === category
+      article.frontmatter.category === category &&
+      !isDaycareListicle(article.slug)
   )
 
 }

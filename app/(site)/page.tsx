@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import Heading from '@/components/ui/Heading'
@@ -7,9 +8,13 @@ import PostCard from '@/components/PostCard'
 import { buildMetadata } from '@/lib/seo'
 
 import {
-  getAllArticles,
   getAllReviews,
+  getArticlesByCategory,
 } from '@/lib/mdx'
+
+import { categories } from '@/data/categories'
+
+const CATEGORY_LIMIT = 6
 
 export const metadata: Metadata = buildMetadata({
   title:
@@ -20,8 +25,14 @@ export const metadata: Metadata = buildMetadata({
 })
 export default function HomePage() {
 
-  const articles = getAllArticles()
   const reviews = getAllReviews()
+
+  const categorySections = categories
+    .map((category) => ({
+      ...category,
+      posts: getArticlesByCategory(category.slug),
+    }))
+    .filter((category) => category.posts.length > 0)
 
   return (
     <main>
@@ -48,36 +59,47 @@ export default function HomePage() {
 
       </Section>
 
-      <Section>
+      {categorySections.map((category) => (
 
-  <Container>
+        <Section key={category.slug}>
 
-    <div className="flex items-center justify-between mb-10">
+          <Container>
 
-      <Heading>
-        Latest Articles
-      </Heading>
+            <div className="flex items-center justify-between mb-10">
 
-    </div>
+              <Heading>
+                {category.name}
+              </Heading>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+              <Link
+                href={`/category/${category.slug}`}
+                className="text-sm font-semibold uppercase tracking-[0.2em] text-[#FA8072] hover:underline whitespace-nowrap"
+              >
+                Lihat Semua
+              </Link>
 
-      {articles.map((article) => (
+            </div>
 
-        <PostCard
-          key={article.slug}
-          slug={article.slug}
-          frontmatter={article.frontmatter}
-          type="articles"
-        />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+
+              {category.posts.slice(0, CATEGORY_LIMIT).map((post) => (
+
+                <PostCard
+                  key={post.slug}
+                  slug={post.slug}
+                  frontmatter={post.frontmatter}
+                  type="articles"
+                />
+
+              ))}
+
+            </div>
+
+          </Container>
+
+        </Section>
 
       ))}
-
-    </div>
-
-  </Container>
-
-</Section>
 
 <Section>
 

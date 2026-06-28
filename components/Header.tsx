@@ -8,6 +8,7 @@ import {
   rightCategories,
   navCategories,
 } from '@/data/navigation'
+import { directories } from '@/data/directories'
 
 const LOGO_SRC = '/images/edumama-logo-new.jpg'
 
@@ -25,6 +26,51 @@ export default function Header() {
         <div className="hidden lg:grid grid-cols-[1fr_auto_1fr] items-center gap-8 xl:gap-10 min-h-[80px] text-sm uppercase tracking-[0.13em]">
 
           <nav className="flex items-center justify-end gap-6 lg:gap-8">
+
+            <div className="relative group">
+
+              <Link
+                href="/direktori"
+                className="flex items-center gap-1 whitespace-nowrap hover:opacity-80 transition"
+              >
+                Direktori
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  className="transition group-hover:rotate-180"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </Link>
+
+              {/* Dropdown (pt-3 keeps a hover bridge to the panel) */}
+              <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 hidden group-hover:block">
+                <div className="min-w-[14rem] rounded-2xl bg-white text-gray-800 shadow-lg ring-1 ring-black/5 py-2 normal-case tracking-normal">
+                  {directories.map((directory) => (
+                    <Link
+                      key={directory.slug}
+                      href={directory.href}
+                      className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm hover:bg-gray-50 hover:text-[#FA8072] transition"
+                    >
+                      {directory.label}
+                      {!directory.available && (
+                        <span className="text-[10px] uppercase tracking-[0.15em] text-gray-400">
+                          Segera
+                        </span>
+                      )}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+            </div>
 
             {leftCategories.map((category) => (
               <Link
@@ -122,6 +168,30 @@ export default function Header() {
 
         {menuOpen && (
           <nav className="lg:hidden flex flex-col pb-4 text-sm uppercase tracking-[0.13em] border-t border-white/20">
+
+            <Link
+              href="/direktori"
+              onClick={() => setMenuOpen(false)}
+              className="py-3 hover:opacity-80 transition"
+            >
+              Direktori
+            </Link>
+
+            <div className="flex flex-col border-l border-white/20 ml-1 pl-4">
+              {directories.map((directory) => (
+                <Link
+                  key={directory.slug}
+                  href={directory.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-2 py-2 text-xs hover:opacity-80 transition"
+                >
+                  {directory.label}
+                  {!directory.available && (
+                    <span className="text-[10px] text-white/60">Segera</span>
+                  )}
+                </Link>
+              ))}
+            </div>
 
             {navCategories.map((category) => (
               <Link
