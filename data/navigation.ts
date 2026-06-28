@@ -4,6 +4,7 @@ export type NavItem = {
 }
 
 export const leftCategories: NavItem[] = [
+  { href: '/daycare', label: 'Direktori' },
   { href: '/reviews', label: 'Preschool' },
   { href: '/category/parenting-tips', label: 'Parenting' },
   { href: '/category/pendidikan-anak', label: 'Pendidikan' },

@@ -172,6 +172,90 @@ export function faqSchema(
   }
 }
 
+type PlaceSchemaArgs = {
+  name: string
+  /** schema.org type, e.g. 'ChildCare' | 'Preschool' | 'LocalBusiness'. */
+  schemaType?: string
+  path: string
+  description?: string
+  telephone?: string
+  /** Street/full address line. */
+  address?: string
+  addressLocality?: string
+  lat?: number
+  lng?: number
+  /** External profiles (website, Instagram, Google Maps). */
+  sameAs?: string[]
+}
+
+/**
+ * LocalBusiness-family schema for a directory entry.
+ *
+ * Intentionally omits `aggregateRating`/`review`: those must reflect
+ * reviews collected and shown on our own page, not third-party
+ * (Google Maps) scores. Add them only when we host our own reviews.
+ */
+export function placeSchema({
+  name,
+  schemaType = 'ChildCare',
+  path,
+  description,
+  telephone,
+  address,
+  addressLocality,
+  lat,
+  lng,
+  sameAs,
+}: PlaceSchemaArgs): JsonLd {
+  const cleanSameAs = (sameAs || []).filter(Boolean)
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': schemaType,
+    name,
+    '@id': absoluteUrl(path),
+    url: absoluteUrl(path),
+    ...(description ? { description } : {}),
+    ...(telephone ? { telephone } : {}),
+    ...(address || addressLocality
+      ? {
+          address: {
+            '@type': 'PostalAddress',
+            ...(address ? { streetAddress: address } : {}),
+            ...(addressLocality ? { addressLocality } : {}),
+            addressCountry: 'ID',
+          },
+        }
+      : {}),
+    ...(typeof lat === 'number' && typeof lng === 'number'
+      ? {
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: lat,
+            longitude: lng,
+          },
+        }
+      : {}),
+    ...(cleanSameAs.length ? { sameAs: cleanSameAs } : {}),
+  }
+}
+
+/** ItemList schema for a directory listing page. */
+export function itemListSchema(
+  items: { name: string; path: string }[],
+): JsonLd {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      url: absoluteUrl(item.path),
+    })),
+  }
+}
+
 /** BreadcrumbList schema from an ordered list of crumbs. */
 export function breadcrumbSchema(
   items: { name: string; path: string }[],
