@@ -22,9 +22,9 @@ export default function AuthorCard({
 
       </p>
 
-      <div className="flex items-start gap-6">
+      <div className="flex items-start gap-4 sm:gap-6">
 
-        <div className="relative w-20 h-20 rounded-full overflow-hidden shrink-0">
+        <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden shrink-0">
 
           <Image
             src={author.image}
@@ -37,7 +37,7 @@ export default function AuthorCard({
 
         <div>
 
-          <h3 className="text-2xl font-bold mb-3">
+          <h3 className="text-xl sm:text-2xl font-bold mb-3">
 
             {author.name}
 

@@ -5,6 +5,7 @@ import FAQ from '@/components/mdx/FAQ'
 
 import { MDXRemote } from 'next-mdx-remote/rsc'
 
+import remarkGfm from 'remark-gfm'
 import rehypeSlug from 'rehype-slug'
 
 import ArticleHero from './ArticleHero'
@@ -45,9 +46,9 @@ export default function ContentPage({
         author={author}
       />
 
-      <section className="max-w-7xl mx-auto px-6 py-16">
+      <section className="max-w-7xl mx-auto px-6 py-10 lg:py-16">
 
-        <div className="grid grid-cols-12 gap-12">
+        <div className="grid grid-cols-12 gap-8 lg:gap-12">
 
           {/* LEFT SIDEBAR */}
 
@@ -72,9 +73,17 @@ export default function ContentPage({
     SchoolSnapshot,
     ComparisonTable,
     FAQ,
+    table: (props) => (
+      <div className="overflow-x-auto my-8">
+        <table {...props} />
+      </div>
+    ),
   }}
   options={{
     mdxOptions: {
+      remarkPlugins: [
+        remarkGfm,
+      ],
       rehypePlugins: [
         rehypeSlug,
       ],
