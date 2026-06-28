@@ -19,7 +19,7 @@ export default function TentangKamiPage() {
         <Container>
           <div className="max-w-4xl mx-auto space-y-10">
             <div className="space-y-4">
-              <Heading>
+              <Heading level="h1">
                 Tentang EduMama
               </Heading>
 

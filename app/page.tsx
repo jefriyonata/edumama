@@ -26,6 +26,28 @@ export default function HomePage() {
   return (
     <main>
 
+      <Section className="pb-0">
+
+        <Container>
+
+          <div className="max-w-3xl">
+
+            <Heading level="h1">
+              Panduan Preschool, Daycare &amp; Parenting Anak Usia Dini
+            </Heading>
+
+            <p className="mt-6 text-lg text-gray-600 leading-8">
+              Review preschool, direktori daycare per kota, dan panduan
+              parenting tepercaya untuk membantu keluarga Indonesia memilih
+              yang terbaik bagi si kecil.
+            </p>
+
+          </div>
+
+        </Container>
+
+      </Section>
+
       <Section>
 
   <Container>

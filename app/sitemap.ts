@@ -3,6 +3,10 @@ import type { MetadataRoute } from 'next'
 import { siteConfig } from '@/lib/seo'
 import { getAllArticles, getAllReviews } from '@/lib/mdx'
 import { categories } from '@/data/categories'
+import {
+  getAllPlaces,
+  getCitiesForType,
+} from '@/lib/places'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteConfig.url
@@ -50,10 +54,49 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   )
 
+  // Directory: type hubs (e.g. /daycare), city listings
+  // (/daycare/[city]), and entry pages (/daycare/[city]/[slug]).
+  const places = getAllPlaces()
+
+  const directoryTypes = [...new Set(places.map((p) => p.type))]
+
+  const directoryHubRoutes: MetadataRoute.Sitemap = directoryTypes.map(
+    (type) => ({
+      url: `${base}/${type}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    }),
+  )
+
+  const directoryCityRoutes: MetadataRoute.Sitemap =
+    directoryTypes.flatMap((type) =>
+      getCitiesForType(type).map((c) => ({
+        url: `${base}/${type}/${c.city}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+      })),
+    )
+
+  const directoryEntryRoutes: MetadataRoute.Sitemap = places.map(
+    (place) => ({
+      url: `${base}/${place.type}/${place.city}/${place.slug}`,
+      lastModified: place.lastVerified
+        ? new Date(place.lastVerified)
+        : new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    }),
+  )
+
   return [
     ...staticRoutes,
     ...categoryRoutes,
     ...articleRoutes,
     ...reviewRoutes,
+    ...directoryHubRoutes,
+    ...directoryCityRoutes,
+    ...directoryEntryRoutes,
   ]
 }
