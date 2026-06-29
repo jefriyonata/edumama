@@ -7,6 +7,21 @@ const articlesDirectory = path.join(
   'content/articles'
 )
 
+/**
+ * js-yaml (via gray-matter) parses unquoted YAML dates — e.g. Keystatic
+ * writes `date: 2026-06-17` — into JS Date objects, which crash when
+ * rendered as a React child ("Objects are not valid as a React child").
+ * Coerce the date back to a plain 'YYYY-MM-DD' string.
+ */
+function normalizeFrontmatter(
+  data: Record<string, any>,
+): Record<string, any> {
+  if (data.date instanceof Date) {
+    data.date = data.date.toISOString().slice(0, 10)
+  }
+  return data
+}
+
 export function getArticleBySlug(slug: string) {
 
   const realSlug = slug.replace(/\.mdx$/, '')
@@ -29,7 +44,7 @@ export function getArticleBySlug(slug: string) {
 
   return {
     slug: realSlug,
-    frontmatter: data,
+    frontmatter: normalizeFrontmatter(data),
     content,
   }
 }
@@ -56,7 +71,7 @@ export function getAllArticles() {
 
     return {
       slug,
-      frontmatter: data,
+      frontmatter: normalizeFrontmatter(data),
     }
   })
 
@@ -90,7 +105,7 @@ export function getReviewBySlug(slug: string) {
 
   return {
     slug: realSlug,
-    frontmatter: data,
+    frontmatter: normalizeFrontmatter(data),
     content,
   }
 }
@@ -117,7 +132,7 @@ export function getAllReviews() {
 
     return {
       slug,
-      frontmatter: data,
+      frontmatter: normalizeFrontmatter(data),
     }
   })
 
@@ -161,15 +176,6 @@ export function extractFaqs(content: string): Faq[] {
   return faqs
 }
 
-/**
- * Daycare listicles live in content/articles as `daycare-*.mdx` but are
- * surfaced through the dedicated /daycare directory, so we keep them out
- * of the category listings.
- */
-function isDaycareListicle(slug: string) {
-  return slug.startsWith('daycare-')
-}
-
 export function getArticlesByCategory(
   category: string
 ) {
@@ -179,8 +185,7 @@ export function getArticlesByCategory(
 
   return articles.filter(
     (article) =>
-      article.frontmatter.category === category &&
-      !isDaycareListicle(article.slug)
+      article.frontmatter.category === category
   )
 
 }
