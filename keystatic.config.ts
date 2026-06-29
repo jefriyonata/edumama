@@ -60,10 +60,19 @@ const mdxComponents = {
 }
 
 export default config({
-  // Local storage = edit files on disk (dev). For real non-technical
-  // editors, switch to { kind: 'github', repo: 'owner/edumama' } so they
-  // edit through a hosted UI that commits via a GitHub App.
-  storage: { kind: 'local' },
+  // Storage is environment-dependent so the hosted CMS is never open:
+  //  - dev (localhost only): 'local' — edit files on disk, no login. Safe
+  //    because it's only reachable from your own machine.
+  //  - production: 'github' — the hosted /keystatic admin requires a GitHub
+  //    login and only users with WRITE access to the repo can edit. Needs a
+  //    GitHub App + KEYSTATIC_* env vars (see deploy setup).
+  storage:
+    process.env.NODE_ENV === 'production'
+      ? {
+          kind: 'github',
+          repo: { owner: 'jefriyonata', name: 'edumama' },
+        }
+      : { kind: 'local' },
 
   ui: {
     brand: { name: 'Edumama CMS' },
