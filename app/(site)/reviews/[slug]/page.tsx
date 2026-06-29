@@ -13,6 +13,7 @@ import {
   articleSchema,
   breadcrumbSchema,
   faqSchema,
+  parseCustomSchema,
 } from '@/lib/seo'
 import { authors, type AuthorKey } from '@/data/authors'
 
@@ -37,7 +38,7 @@ export async function generateMetadata({
     notFound()
   }
 
-  const { title, description, image, date, author } =
+  const { title, description, image, date, author, noindex } =
     review.frontmatter
 
   return buildMetadata({
@@ -50,6 +51,7 @@ export async function generateMetadata({
     authors: authors[author as AuthorKey]
       ? [authors[author as AuthorKey].name]
       : undefined,
+    noindex: Boolean(noindex),
   })
 
 }
@@ -69,7 +71,7 @@ export default async function ReviewPage({
     notFound()
   }
 
-  const { title, description, image, date, author } =
+  const { title, description, image, date, author, customSchema } =
     review.frontmatter
 
   const path = `/reviews/${slug}`
@@ -91,6 +93,7 @@ export default async function ReviewPage({
       { name: title, path },
     ]),
     ...(faqs.length ? [faqSchema(faqs)] : []),
+    ...parseCustomSchema(customSchema),
   ]
 
   return (

@@ -34,6 +34,8 @@ type BuildMetadataArgs = {
   publishedTime?: string
   modifiedTime?: string
   authors?: string[]
+  /** When true, emit robots noindex (still followed). */
+  noindex?: boolean
 }
 
 /**
@@ -50,6 +52,7 @@ export function buildMetadata({
   publishedTime,
   modifiedTime,
   authors,
+  noindex,
 }: BuildMetadataArgs = {}): Metadata {
   const ogImage = image || siteConfig.defaultImage
 
@@ -59,6 +62,9 @@ export function buildMetadata({
     alternates: {
       canonical: path,
     },
+    ...(noindex
+      ? { robots: { index: false, follow: true } }
+      : {}),
     openGraph: {
       type,
       url: path,
@@ -253,6 +259,23 @@ export function itemListSchema(
       name: item.name,
       url: absoluteUrl(item.path),
     })),
+  }
+}
+
+/**
+ * Safely parse an editor-supplied JSON-LD string (single object or array)
+ * into schema objects. Invalid JSON is ignored (returns []) so a typo in the
+ * CMS can never break the page render.
+ */
+export function parseCustomSchema(raw?: string | null): JsonLd[] {
+  if (!raw || !raw.trim()) {
+    return []
+  }
+  try {
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : [parsed]
+  } catch {
+    return []
   }
 }
 

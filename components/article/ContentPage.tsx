@@ -2,6 +2,7 @@ import Callout from '@/components/mdx/Callouts'
 import SchoolSnapshot from '@/components/mdx/SchoolSnapshot'
 import ComparisonTable from '@/components/mdx/ComparisonTable'
 import FAQ from '@/components/mdx/FAQ'
+import SmartLink from '@/components/mdx/SmartLink'
 
 import { MDXRemote } from 'next-mdx-remote/rsc'
 
@@ -73,6 +74,11 @@ export default function ContentPage({
     SchoolSnapshot,
     ComparisonTable,
     FAQ,
+    // The CMS "Link" mark (tag: 'a') serializes to an <a>; map both names so
+    // it routes through SmartLink, which adds rel="noopener noreferrer" when
+    // opening in a new tab. Normal markdown links pass through unchanged.
+    a: SmartLink,
+    Link: SmartLink,
     table: (props) => (
       <div className="overflow-x-auto my-8">
         <table {...props} />
