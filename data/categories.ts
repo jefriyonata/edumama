@@ -1,6 +1,11 @@
 export const categories = [
 
   {
+    slug: 'preschool',
+    name: 'Preschool',
+  },
+
+  {
     slug: 'parenting-tips',
     name: 'Parenting Tips',
   },

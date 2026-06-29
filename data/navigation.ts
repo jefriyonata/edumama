@@ -6,7 +6,7 @@ export type NavItem = {
 // 'Direktori' is rendered as a dropdown in the header (see Header.tsx),
 // sourced from data/directories.ts, so it is not listed here.
 export const leftCategories: NavItem[] = [
-  { href: '/reviews', label: 'Preschool' },
+  { href: '/category/preschool', label: 'Preschool' },
   { href: '/category/parenting-tips', label: 'Parenting' }
 ]
 
