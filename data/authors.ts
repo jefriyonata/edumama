@@ -22,8 +22,9 @@ export const authors = {
     bio:
       'Preschool curriculum specialist and educator.',
 
+    // Placeholder until a real avatar is added at /images/authors/andi.jpg
     image:
-      '/images/authors/sarah.jpg',
+      '/images/logo-edumama.png',
 
     linkedin:
       'https://linkedin.com',
