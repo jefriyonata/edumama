@@ -143,7 +143,7 @@ export default config({
       : { kind: 'local' },
 
   ui: {
-    brand: { name: 'Edumama CMS' },
+    brand: { name: 'Bersemai CMS' },
   },
 
   collections: {

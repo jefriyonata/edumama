@@ -1,6 +1,6 @@
 @AGENTS.md
 
-# Edumama
+# Bersemai
 
 Tech Stack:
 - Next.js App Router

@@ -18,7 +18,7 @@ import {
 export const metadata: Metadata = buildMetadata({
   title: 'Direktori — Daycare, Preschool, Bimbel & Playground',
   description:
-    'Direktori Edumama: telusuri daycare, preschool, bimbel, dan playground anak per kota di Indonesia.',
+    'Direktori Bersemai: telusuri daycare, preschool, bimbel, dan playground anak per kota di Indonesia.',
   path: '/direktori',
 })
 

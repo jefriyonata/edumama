@@ -87,7 +87,7 @@ export default function Header() {
           <Link href="/" className="justify-self-center shrink-0">
             <Image
               src={LOGO_SRC}
-              alt="eduMama"
+              alt="Bersemai"
               width={793}
               height={276}
               priority
@@ -118,7 +118,7 @@ export default function Header() {
           <Link href="/" className="shrink-0" onClick={() => setMenuOpen(false)}>
             <Image
               src={LOGO_SRC}
-              alt="eduMama"
+              alt="Bersemai"
               width={793}
               height={276}
               priority

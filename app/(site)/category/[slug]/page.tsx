@@ -43,7 +43,7 @@ export async function generateMetadata({
 
   return buildMetadata({
     title: category?.name || 'Category',
-    description: `Artikel kategori ${category?.name} di Edumama.`,
+    description: `Artikel kategori ${category?.name} di Bersemai.`,
     path: `/category/${slug}`,
   })
 

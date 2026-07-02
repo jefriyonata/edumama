@@ -3,7 +3,7 @@ import type { Place } from '@/lib/places'
 /**
  * Daycare directory entries.
  *
- * Seeded from Edumama's own SERP + Google Maps research (Juni 2026).
+ * Seeded from Bersemai's own SERP + Google Maps research (Juni 2026).
  * `googleRating` / `googleReviewCount` are public Maps signals shown as
  * attributed text only — keep them out of structured data.
  * Set `verified: true` only after a direct check (call/visit/site).

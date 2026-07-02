@@ -11,7 +11,7 @@ import { getAllArticles } from '@/lib/mdx'
 export const metadata: Metadata = buildMetadata({
   title: 'Articles',
   description:
-    'Kumpulan artikel parenting dan pendidikan anak usia dini dari Edumama.',
+    'Kumpulan artikel parenting dan pendidikan anak usia dini dari Bersemai.',
   path: '/articles',
 })
 

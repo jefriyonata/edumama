@@ -8,7 +8,7 @@ import { buildMetadata } from '@/lib/seo'
 export const metadata: Metadata = buildMetadata({
   title: 'Tentang Kami',
   description:
-    'Kenali EduMama, platform yang membantu orang tua menemukan informasi preschool, kindergarten, dan pendidikan anak dengan lebih mudah.',
+    'Kenali Bersemai, platform yang membantu orang tua menemukan informasi preschool, kindergarten, dan pendidikan anak dengan lebih mudah.',
   path: '/tentang-kami',
 })
 
@@ -20,15 +20,15 @@ export default function TentangKamiPage() {
           <div className="max-w-4xl mx-auto space-y-10">
             <div className="space-y-4">
               <Heading level="h1">
-                Tentang EduMama
+                Tentang Bersemai
               </Heading>
 
               <p className="text-lg leading-8 text-neutral-700">
-                EduMama adalah platform informasi pendidikan anak yang membantu orang tua menemukan preschool, kindergarten, dan berbagai informasi pendidikan dengan lebih mudah.
+                Bersemai adalah platform informasi pendidikan anak yang membantu orang tua menemukan preschool, kindergarten, dan berbagai informasi pendidikan dengan lebih mudah.
               </p>
 
               <p className="text-lg leading-8 text-neutral-700">
-                Kami percaya bahwa memilih sekolah untuk anak adalah keputusan besar. Karena itu, EduMama hadir untuk menyediakan artikel, review, dan panduan yang mudah dipahami agar orang tua dapat membuat keputusan terbaik untuk keluarga mereka.
+                Kami percaya bahwa memilih sekolah untuk anak adalah keputusan besar. Karena itu, Bersemai hadir untuk menyediakan artikel, review, dan panduan yang mudah dipahami agar orang tua dapat membuat keputusan terbaik untuk keluarga mereka.
               </p>
             </div>
 
@@ -38,7 +38,7 @@ export default function TentangKamiPage() {
               </h2>
 
               <p className="text-lg leading-8 text-neutral-700">
-                Misi EduMama adalah membantu orang tua di Indonesia mendapatkan akses informasi pendidikan anak yang terpercaya, jelas, dan praktis.
+                Misi Bersemai adalah membantu orang tua di Indonesia mendapatkan akses informasi pendidikan anak yang terpercaya, jelas, dan praktis.
               </p>
 
               <p className="text-lg leading-8 text-neutral-700">
@@ -48,7 +48,7 @@ export default function TentangKamiPage() {
 
             <div className="space-y-4">
               <h2 className="text-3xl font-semibold">
-                Apa yang Bisa Anda Temukan di EduMama?
+                Apa yang Bisa Anda Temukan di Bersemai?
               </h2>
 
               <ul className="list-disc pl-6 space-y-3 text-lg leading-8 text-neutral-700">
@@ -66,7 +66,7 @@ export default function TentangKamiPage() {
               </h2>
 
               <p className="text-lg leading-8 text-neutral-700">
-                EduMama dibuat untuk orang tua yang ingin melakukan riset sebelum memilih sekolah. Kami mengumpulkan informasi dari berbagai sumber untuk membantu Anda membandingkan pilihan dengan lebih praktis.
+                Bersemai dibuat untuk orang tua yang ingin melakukan riset sebelum memilih sekolah. Kami mengumpulkan informasi dari berbagai sumber untuk membantu Anda membandingkan pilihan dengan lebih praktis.
               </p>
 
               <p className="text-lg leading-8 text-neutral-700">

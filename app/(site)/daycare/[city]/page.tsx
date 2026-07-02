@@ -102,7 +102,7 @@ export default async function DaycareCityPage({
             <p className="text-lg text-gray-600 max-w-3xl mb-10">
               {places.length} tempat penitipan anak di {cityLabel} —
               lengkap dengan lokasi, kurikulum, rentang usia, dan kontak.
-              Data dari riset Google Maps Edumama; selalu verifikasi
+              Data dari riset Google Maps Bersemai; selalu verifikasi
               ulang sebelum mendaftar.
             </p>
 

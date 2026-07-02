@@ -20,7 +20,7 @@ export default function Footer() {
             <Link href="/" className="inline-block mb-5">
               <Image
                 src="/images/edumama-logo-new.jpg"
-                alt="eduMama"
+                alt="Bersemai"
                 width={793}
                 height={276}
                 className="w-40 max-w-none h-auto"
@@ -98,7 +98,7 @@ export default function Footer() {
         <div className="border-t border-white/20 mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/70">
 
           <p>
-            © {currentYear} Edumama. All rights reserved.
+            © {currentYear} Bersemai. All rights reserved.
           </p>
 
           <p>

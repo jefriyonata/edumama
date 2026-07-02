@@ -19,7 +19,7 @@ const TYPE = 'daycare' as const
 export const metadata: Metadata = buildMetadata({
   title: 'Direktori Daycare — Tempat Penitipan Anak per Kota',
   description:
-    'Direktori daycare Edumama: telusuri tempat penitipan anak per kota, lengkap dengan lokasi, kurikulum, usia, fasilitas, dan kontak.',
+    'Direktori daycare Bersemai: telusuri tempat penitipan anak per kota, lengkap dengan lokasi, kurikulum, usia, fasilitas, dan kontak.',
   path: `/${TYPE}`,
 })
 

@@ -3,10 +3,10 @@ import type { Metadata } from 'next'
 /**
  * Central SEO configuration for the whole site.
  * Set NEXT_PUBLIC_SITE_URL in your environment for production
- * (e.g. https://edumama.id). Falls back to localhost in dev.
+ * (e.g. https://bersemai.com). Falls back to localhost in dev.
  */
 export const siteConfig = {
-  name: 'Edumama',
+  name: 'Bersemai',
   url: (
     process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
   ).replace(/\/$/, ''),
@@ -15,7 +15,7 @@ export const siteConfig = {
   locale: 'id_ID',
   defaultImage: '/images/edumama-logo-new.jpg',
   logo: '/images/edumama-logo-new.jpg',
-  twitter: '@edumama',
+  twitter: '@bersemai',
 }
 
 /** Build an absolute URL from a site-relative path. */
