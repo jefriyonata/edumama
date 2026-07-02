@@ -1,11 +1,8 @@
 import Image from 'next/image'
+import type { Author } from '@/lib/authors'
 
 type AuthorCardProps = {
-  author: {
-    name: string
-    bio: string
-    image: string
-  }
+  author: Author
 }
 
 export default function AuthorCard({
@@ -27,7 +24,7 @@ export default function AuthorCard({
         <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden shrink-0">
 
           <Image
-            src={author.image}
+            src={author.image || '/images/logo-edumama.png'}
             alt={author.name}
             fill
             className="object-cover"

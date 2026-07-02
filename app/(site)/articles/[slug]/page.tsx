@@ -15,7 +15,7 @@ import {
   faqSchema,
   parseCustomSchema,
 } from '@/lib/seo'
-import { authors, type AuthorKey } from '@/data/authors'
+import { getAuthor } from '@/lib/authors'
 
 export function generateStaticParams() {
   return getAllArticles().map((article) => ({
@@ -48,8 +48,8 @@ export async function generateMetadata({
     image,
     type: 'article',
     publishedTime: date,
-    authors: authors[author as AuthorKey]
-      ? [authors[author as AuthorKey].name]
+    authors: getAuthor(author)
+      ? [getAuthor(author)!.name]
       : undefined,
     noindex: Boolean(noindex),
   })
@@ -84,7 +84,7 @@ export default async function ArticlePage({
       path,
       image,
       datePublished: date,
-      authorName: authors[author as AuthorKey]?.name,
+      authorName: getAuthor(author)?.name,
     }),
     breadcrumbSchema([
       { name: 'Home', path: '/' },

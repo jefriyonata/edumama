@@ -2,7 +2,6 @@ import { createElement } from 'react'
 import { config, collection, fields } from '@keystatic/core'
 import { wrapper, block, mark } from '@keystatic/core/content-components'
 
-import { authors } from '@/data/authors'
 import { categories } from '@/data/categories'
 
 /** Inline link icon (lucide "link-2") as a plain ReactElement — no JSX. */
@@ -22,10 +21,6 @@ const linkIcon = createElement(
   createElement('path', { key: 'a', d: 'M9 17H7A5 5 0 0 1 7 7h2' }),
   createElement('path', { key: 'b', d: 'M15 7h2a5 5 0 1 1 0 10h-2' }),
   createElement('line', { key: 'c', x1: 8, y1: 12, x2: 16, y2: 12 }),
-)
-
-const authorOptions = Object.entries(authors).map(
-  ([value, author]) => ({ label: author.name, value }),
 )
 
 const categoryOptions = categories.map((category) => ({
@@ -152,6 +147,30 @@ export default config({
   },
 
   collections: {
+    authors: collection({
+      label: 'Authors',
+      path: 'content/authors/*',
+      slugField: 'name',
+      format: { data: 'yaml' },
+      columns: ['name'],
+      schema: {
+        name: fields.slug({
+          name: {
+            label: 'Name',
+            validation: { isRequired: true },
+          },
+        }),
+        bio: fields.text({ label: 'Bio', multiline: true }),
+        image: fields.image({
+          label: 'Avatar',
+          directory: 'public/images/authors',
+          publicPath: '/images/authors',
+        }),
+        linkedin: fields.url({ label: 'LinkedIn' }),
+        twitter: fields.url({ label: 'Twitter / X' }),
+      },
+    }),
+
     articles: collection({
       label: 'Articles',
       path: 'content/articles/*',
@@ -171,10 +190,10 @@ export default config({
           multiline: true,
         }),
         date: fields.date({ label: 'Date' }),
-        author: fields.select({
+        author: fields.relationship({
           label: 'Author',
-          options: authorOptions,
-          defaultValue: authorOptions[0]?.value ?? 'jefri',
+          collection: 'authors',
+          validation: { isRequired: true },
         }),
         category: fields.select({
           label: 'Category',
@@ -213,10 +232,10 @@ export default config({
           multiline: true,
         }),
         date: fields.date({ label: 'Date' }),
-        author: fields.select({
+        author: fields.relationship({
           label: 'Author',
-          options: authorOptions,
-          defaultValue: authorOptions[0]?.value ?? 'jefri',
+          collection: 'authors',
+          validation: { isRequired: true },
         }),
         ...seoFields,
         content: fields.mdx({

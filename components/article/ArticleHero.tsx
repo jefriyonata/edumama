@@ -38,7 +38,7 @@ export default function ArticleHero({
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm opacity-80">
 
           <span>
-            By {author.name}
+            By {author?.name}
           </span>
 
           <span>•</span>

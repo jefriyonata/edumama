@@ -15,10 +15,7 @@ import AuthorCard from './AuthorCard'
 
 import { extractHeadings } from '@/lib/toc'
 
-import {
-  authors,
-  type AuthorKey,
-} from '@/data/authors'
+import { getAuthor } from '@/lib/authors'
 
 type ContentPageProps = {
   frontmatter: any
@@ -33,11 +30,8 @@ export default function ContentPage({
   const headings =
     extractHeadings(content)
 
-  const authorKey =
-    frontmatter.author as AuthorKey
-
   const author =
-    authors[authorKey]
+    getAuthor(frontmatter.author)
 
   return (
     <main>
@@ -101,7 +95,7 @@ export default function ContentPage({
 
 <div className="mt-16">
 
-  <AuthorCard author={author} />
+  {author && <AuthorCard author={author} />}
 
 </div>
 
