@@ -22,6 +22,16 @@ function normalizeFrontmatter(
   return data
 }
 
+/**
+ * Unpublished entries have `draft: true` in their frontmatter. Drafts are
+ * excluded from every listing, the sitemap, and static generation, and
+ * their URLs return 404 — but the file stays in the repo/CMS so it can be
+ * polished and published later by unchecking the field.
+ */
+function isDraft(data: Record<string, any>): boolean {
+  return data.draft === true
+}
+
 export function getArticleBySlug(slug: string) {
 
   const realSlug = slug.replace(/\.mdx$/, '')
@@ -41,6 +51,10 @@ export function getArticleBySlug(slug: string) {
   )
 
   const { data, content } = matter(fileContents)
+
+  if (isDraft(data)) {
+    return null
+  }
 
   return {
     slug: realSlug,
@@ -75,7 +89,9 @@ export function getAllArticles() {
     }
   })
 
-  return articles
+  return articles.filter(
+    (article) => article.frontmatter.draft !== true,
+  )
 }
 
 const reviewsDirectory = path.join(
@@ -102,6 +118,10 @@ export function getReviewBySlug(slug: string) {
   )
 
   const { data, content } = matter(fileContents)
+
+  if (isDraft(data)) {
+    return null
+  }
 
   return {
     slug: realSlug,
@@ -136,7 +156,9 @@ export function getAllReviews() {
     }
   })
 
-  return reviews
+  return reviews.filter(
+    (review) => review.frontmatter.draft !== true,
+  )
 }
 
 export type Faq = {

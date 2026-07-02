@@ -185,6 +185,12 @@ export default config({
             validation: { isRequired: true },
           },
         }),
+        draft: fields.checkbox({
+          label: 'Draft (hide from the live site)',
+          description:
+            'When on, this entry is unpublished: removed from all listings and the sitemap, and its URL returns 404. Uncheck to publish.',
+          defaultValue: false,
+        }),
         description: fields.text({
           label: 'Description',
           multiline: true,
@@ -226,6 +232,12 @@ export default config({
             label: 'Title',
             validation: { isRequired: true },
           },
+        }),
+        draft: fields.checkbox({
+          label: 'Draft (hide from the live site)',
+          description:
+            'When on, this entry is unpublished: removed from all listings and the sitemap, and its URL returns 404. Uncheck to publish.',
+          defaultValue: false,
         }),
         description: fields.text({
           label: 'Description',
