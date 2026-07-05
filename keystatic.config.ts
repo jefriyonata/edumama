@@ -161,9 +161,15 @@ export default config({
   //  - production: 'github' — the hosted /keystatic admin requires a GitHub
   //    login and only users with WRITE access to the repo can edit. Needs a
   //    GitHub App + KEYSTATIC_* env vars (see deploy setup).
+  //
+  // IMPORTANT: gate ONLY on NODE_ENV. This config is imported by both the
+  // server (API route) and the client admin bundle, and Next only inlines
+  // NODE_ENV + NEXT_PUBLIC_* vars into the browser. Gating on a server-only
+  // var like KEYSTATIC_GITHUB_CLIENT_ID makes the CLIENT fall back to 'local'
+  // while the server stays 'github' — the mismatch 404s every collection
+  // ("Unexpected token 'N', 'Not Found' is not valid JSON").
   storage:
-    process.env.NODE_ENV === 'production' &&
-    process.env.KEYSTATIC_GITHUB_CLIENT_ID
+    process.env.NODE_ENV === 'production'
       ? {
           kind: 'github',
           repo: { owner: 'jefriyonata', name: 'edumama' },
