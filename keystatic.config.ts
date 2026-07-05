@@ -239,15 +239,22 @@ export default config({
           options: categoryOptions,
           defaultValue: categoryOptions[0]?.value ?? 'parenting-tips',
         }),
-        image: fields.text({
-          label: 'Thumbnail image path',
-          description: 'e.g. /images/thumbnails/your-image.jpg',
+        image: fields.image({
+          label: 'Thumbnail',
+          directory: 'public/images/thumbnails',
+          publicPath: '/images/thumbnails',
         }),
         ...seoFields,
         content: fields.mdx({
           label: 'Body',
           extension: 'mdx',
           components: mdxComponents,
+          options: {
+            image: {
+              directory: 'public/images/content',
+              publicPath: '/images/content',
+            },
+          },
         }),
       },
     }),
@@ -292,6 +299,12 @@ export default config({
           label: 'Body',
           extension: 'mdx',
           components: mdxComponents,
+          options: {
+            image: {
+              directory: 'public/images/content',
+              publicPath: '/images/content',
+            },
+          },
         }),
       },
     }),

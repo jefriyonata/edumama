@@ -19,6 +19,18 @@ function normalizeFrontmatter(
   if (data.date instanceof Date) {
     data.date = data.date.toISOString().slice(0, 10)
   }
+
+  // Keystatic's image field stores just the filename; map the thumbnail
+  // back to its public URL. Full paths / URLs are passed through unchanged.
+  if (
+    typeof data.image === 'string' &&
+    data.image &&
+    !data.image.startsWith('/') &&
+    !/^https?:\/\//.test(data.image)
+  ) {
+    data.image = `/images/thumbnails/${data.image}`
+  }
+
   return data
 }
 
