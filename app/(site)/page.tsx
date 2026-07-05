@@ -7,10 +7,7 @@ import PostCard from '@/components/PostCard'
 
 import { buildMetadata } from '@/lib/seo'
 
-import {
-  getAllReviews,
-  getArticlesByCategory,
-} from '@/lib/mdx'
+import { getArticlesByCategory } from '@/lib/mdx'
 
 import { categories } from '@/data/categories'
 
@@ -24,8 +21,6 @@ export const metadata: Metadata = buildMetadata({
   path: '/',
 })
 export default function HomePage() {
-
-  const reviews = getAllReviews()
 
   const categorySections = categories
     .map((category) => ({
@@ -100,37 +95,6 @@ export default function HomePage() {
         </Section>
 
       ))}
-
-<Section>
-
-  <Container>
-
-    <div className="flex items-center justify-between mb-10">
-
-      <Heading>
-        Latest Reviews
-      </Heading>
-
-    </div>
-
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-
-      {reviews.map((review) => (
-
-        <PostCard
-          key={review.slug}
-          slug={review.slug}
-          frontmatter={review.frontmatter}
-          type="reviews"
-        />
-
-      ))}
-
-    </div>
-
-  </Container>
-
-</Section>
 
     </main>
   )
