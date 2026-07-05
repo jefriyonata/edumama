@@ -162,7 +162,8 @@ export default config({
   //    login and only users with WRITE access to the repo can edit. Needs a
   //    GitHub App + KEYSTATIC_* env vars (see deploy setup).
   storage:
-    process.env.NODE_ENV === 'production'
+    process.env.NODE_ENV === 'production' &&
+    process.env.KEYSTATIC_GITHUB_CLIENT_ID
       ? {
           kind: 'github',
           repo: { owner: 'jefriyonata', name: 'edumama' },
