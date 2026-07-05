@@ -24,7 +24,7 @@ export default function AuthorCard({
         <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden shrink-0">
 
           <Image
-            src={author.image || '/images/logo-edumama.png'}
+            src={author.image || '/images/bersemai-logo.png'}
             alt={author.name}
             fill
             className="object-cover"

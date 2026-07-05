@@ -13,8 +13,8 @@ export const siteConfig = {
   description:
     'Review preschool, panduan parenting, dan informasi pendidikan anak usia dini untuk keluarga Indonesia.',
   locale: 'id_ID',
-  defaultImage: '/images/edumama-logo-new.jpg',
-  logo: '/images/edumama-logo-new.jpg',
+  defaultImage: '/images/bersemai-logo.png',
+  logo: '/images/bersemai-logo.png',
   twitter: '@bersemai',
 }
 

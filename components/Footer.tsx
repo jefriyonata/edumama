@@ -19,10 +19,10 @@ export default function Footer() {
 
             <Link href="/" className="inline-block mb-5">
               <Image
-                src="/images/edumama-logo-new.jpg"
+                src="/images/bersemai-logo.png"
                 alt="Bersemai"
-                width={793}
-                height={276}
+                width={589}
+                height={236}
                 className="w-40 max-w-none h-auto"
               />
             </Link>

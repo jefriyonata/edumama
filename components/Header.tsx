@@ -10,7 +10,7 @@ import {
 } from '@/data/navigation'
 import { directories } from '@/data/directories'
 
-const LOGO_SRC = '/images/edumama-logo-new.jpg'
+const LOGO_SRC = '/images/bersemai-logo.png'
 
 export default function Header() {
 
@@ -88,8 +88,8 @@ export default function Header() {
             <Image
               src={LOGO_SRC}
               alt="Bersemai"
-              width={793}
-              height={276}
+              width={589}
+              height={236}
               priority
               className="w-44 max-w-none h-auto"
             />
@@ -119,8 +119,8 @@ export default function Header() {
             <Image
               src={LOGO_SRC}
               alt="Bersemai"
-              width={793}
-              height={276}
+              width={589}
+              height={236}
               priority
               className="w-32 max-w-none h-auto"
             />
