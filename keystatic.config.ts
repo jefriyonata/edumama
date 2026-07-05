@@ -106,6 +106,33 @@ const mdxComponents = {
       }),
     },
   }),
+
+  // Internal links: select text, then pick a page from a dropdown instead
+  // of typing a URL. The reference is stored by the entry's stable ID
+  // (filename), and the URL is resolved at render from the target's current
+  // "URL slug" — so changing a page's URL never breaks these links.
+  ArticleLink: mark({
+    label: 'Article link (internal)',
+    icon: linkIcon,
+    schema: {
+      article: fields.relationship({
+        label: 'Article',
+        collection: 'articles',
+        validation: { isRequired: true },
+      }),
+    },
+  }),
+  ReviewLink: mark({
+    label: 'Review link (internal)',
+    icon: linkIcon,
+    schema: {
+      review: fields.relationship({
+        label: 'Review',
+        collection: 'reviews',
+        validation: { isRequired: true },
+      }),
+    },
+  }),
 }
 
 /**
@@ -191,6 +218,11 @@ export default config({
             'When on, this entry is unpublished: removed from all listings and the sitemap, and its URL returns 404. Uncheck to publish.',
           defaultValue: false,
         }),
+        urlSlug: fields.text({
+          label: 'URL slug (optional)',
+          description:
+            'Overrides the URL path, e.g. "apa-itu-montessori" gives /articles/apa-itu-montessori. Change this to change the URL — internal links to this page update automatically. Leave blank to use the entry ID (filename).',
+        }),
         description: fields.text({
           label: 'Description',
           multiline: true,
@@ -238,6 +270,11 @@ export default config({
           description:
             'When on, this entry is unpublished: removed from all listings and the sitemap, and its URL returns 404. Uncheck to publish.',
           defaultValue: false,
+        }),
+        urlSlug: fields.text({
+          label: 'URL slug (optional)',
+          description:
+            'Overrides the URL path, e.g. "apa-itu-montessori" gives /articles/apa-itu-montessori. Change this to change the URL — internal links to this page update automatically. Leave blank to use the entry ID (filename).',
         }),
         description: fields.text({
           label: 'Description',

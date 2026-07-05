@@ -32,66 +32,87 @@ function isDraft(data: Record<string, any>): boolean {
   return data.draft === true
 }
 
-export function getArticleBySlug(slug: string) {
+/**
+ * Every entry has a stable ID = its filename (without .mdx). The public URL
+ * is driven by an optional `urlSlug` frontmatter field, falling back to the
+ * ID. Internal links reference the ID and resolve to the *current* urlSlug
+ * at render time, so changing a URL never breaks a link (no 404/redirect).
+ */
+function urlSlugOf(id: string, data: Record<string, any>): string {
+  const custom =
+    typeof data.urlSlug === 'string' ? data.urlSlug.trim() : ''
+  return custom || id
+}
 
-  const realSlug = slug.replace(/\.mdx$/, '')
-
-  const fullPath = path.join(
-    articlesDirectory,
-    `${realSlug}.mdx`
-  )
-
+function readEntry(directory: string, id: string) {
+  const fullPath = path.join(directory, `${id}.mdx`)
   if (!fs.existsSync(fullPath)) {
     return null
   }
+  return matter(fs.readFileSync(fullPath, 'utf8'))
+}
 
-  const fileContents = fs.readFileSync(
-    fullPath,
-    'utf8'
-  )
+/** Find the published entry in `directory` whose URL slug matches `slug`. */
+function findByUrlSlug(directory: string, slug: string) {
+  const wanted = slug.replace(/\.mdx$/, '')
 
-  const { data, content } = matter(fileContents)
-
-  if (isDraft(data)) {
-    return null
+  for (const file of fs.readdirSync(directory)) {
+    if (!file.endsWith('.mdx')) {
+      continue
+    }
+    const id = file.replace(/\.mdx$/, '')
+    const parsed = matter(
+      fs.readFileSync(path.join(directory, file), 'utf8'),
+    )
+    if (urlSlugOf(id, parsed.data) !== wanted) {
+      continue
+    }
+    if (isDraft(parsed.data)) {
+      return null
+    }
+    return {
+      id,
+      slug: urlSlugOf(id, parsed.data),
+      frontmatter: normalizeFrontmatter(parsed.data),
+      content: parsed.content,
+    }
   }
+  return null
+}
 
-  return {
-    slug: realSlug,
-    frontmatter: normalizeFrontmatter(data),
-    content,
-  }
+/** All published entries in `directory` as { id, slug (urlSlug), frontmatter }. */
+function listEntries(directory: string) {
+  return fs
+    .readdirSync(directory)
+    .filter((file) => file.endsWith('.mdx'))
+    .map((file) => {
+      const id = file.replace(/\.mdx$/, '')
+      const { data } = matter(
+        fs.readFileSync(path.join(directory, file), 'utf8'),
+      )
+      return {
+        id,
+        slug: urlSlugOf(id, data),
+        frontmatter: normalizeFrontmatter(data),
+      }
+    })
+    .filter((entry) => entry.frontmatter.draft !== true)
+}
+
+/** Resolve an article by its URL slug (the `[slug]` route param). */
+export function getArticleBySlug(slug: string) {
+  return findByUrlSlug(articlesDirectory, slug)
 }
 
 export function getAllArticles() {
+  return listEntries(articlesDirectory)
+}
 
-  const files = fs.readdirSync(articlesDirectory)
-
-  const articles = files.map((file) => {
-
-    const slug = file.replace('.mdx', '')
-
-    const fullPath = path.join(
-      articlesDirectory,
-      file
-    )
-
-    const fileContents = fs.readFileSync(
-      fullPath,
-      'utf8'
-    )
-
-    const { data } = matter(fileContents)
-
-    return {
-      slug,
-      frontmatter: normalizeFrontmatter(data),
-    }
-  })
-
-  return articles.filter(
-    (article) => article.frontmatter.draft !== true,
-  )
+/** URL for an article referenced by ID (filename) — used by internal links. */
+export function getArticleUrl(id: string): string {
+  const parsed = readEntry(articlesDirectory, id)
+  const slug = parsed ? urlSlugOf(id, parsed.data) : id
+  return `/articles/${slug}`
 }
 
 const reviewsDirectory = path.join(
@@ -99,66 +120,20 @@ const reviewsDirectory = path.join(
   'content/reviews'
 )
 
+/** Resolve a review by its URL slug (the `[slug]` route param). */
 export function getReviewBySlug(slug: string) {
-
-  const realSlug = slug.replace(/\.mdx$/, '')
-
-  const fullPath = path.join(
-    reviewsDirectory,
-    `${realSlug}.mdx`
-  )
-
-  if (!fs.existsSync(fullPath)) {
-    return null
-  }
-
-  const fileContents = fs.readFileSync(
-    fullPath,
-    'utf8'
-  )
-
-  const { data, content } = matter(fileContents)
-
-  if (isDraft(data)) {
-    return null
-  }
-
-  return {
-    slug: realSlug,
-    frontmatter: normalizeFrontmatter(data),
-    content,
-  }
+  return findByUrlSlug(reviewsDirectory, slug)
 }
 
 export function getAllReviews() {
+  return listEntries(reviewsDirectory)
+}
 
-  const files = fs.readdirSync(reviewsDirectory)
-
-  const reviews = files.map((file) => {
-
-    const slug = file.replace('.mdx', '')
-
-    const fullPath = path.join(
-      reviewsDirectory,
-      file
-    )
-
-    const fileContents = fs.readFileSync(
-      fullPath,
-      'utf8'
-    )
-
-    const { data } = matter(fileContents)
-
-    return {
-      slug,
-      frontmatter: normalizeFrontmatter(data),
-    }
-  })
-
-  return reviews.filter(
-    (review) => review.frontmatter.draft !== true,
-  )
+/** URL for a review referenced by ID (filename) — used by internal links. */
+export function getReviewUrl(id: string): string {
+  const parsed = readEntry(reviewsDirectory, id)
+  const slug = parsed ? urlSlugOf(id, parsed.data) : id
+  return `/reviews/${slug}`
 }
 
 export type Faq = {

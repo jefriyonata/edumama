@@ -3,6 +3,8 @@ import SchoolSnapshot from '@/components/mdx/SchoolSnapshot'
 import ComparisonTable from '@/components/mdx/ComparisonTable'
 import FAQ from '@/components/mdx/FAQ'
 import SmartLink from '@/components/mdx/SmartLink'
+import ArticleLink from '@/components/mdx/ArticleLink'
+import ReviewLink from '@/components/mdx/ReviewLink'
 
 import { MDXRemote } from 'next-mdx-remote/rsc'
 
@@ -73,6 +75,8 @@ export default function ContentPage({
     // opening in a new tab. Normal markdown links pass through unchanged.
     a: SmartLink,
     Link: SmartLink,
+    ArticleLink,
+    ReviewLink,
     table: (props) => (
       <div className="overflow-x-auto my-8">
         <table {...props} />
