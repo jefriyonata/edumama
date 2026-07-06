@@ -20,7 +20,7 @@ export default function DirectoryComingSoon({
         <Container>
 
           <nav className="text-sm text-gray-500 mb-6">
-            <Link href="/" className="hover:underline">Home</Link>
+            <Link href="/" className="hover:underline">Beranda</Link>
             {' / '}
             <Link href="/direktori" className="hover:underline">Direktori</Link>
             {' / '}

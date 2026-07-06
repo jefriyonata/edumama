@@ -28,7 +28,7 @@ export default function DirektoriPage() {
 
   const jsonLd = [
     breadcrumbSchema([
-      { name: 'Home', path: '/' },
+      { name: 'Beranda', path: '/' },
       { name: 'Direktori', path: '/direktori' },
     ]),
     itemListSchema(
@@ -50,7 +50,7 @@ export default function DirektoriPage() {
           <Container>
 
             <nav className="text-sm text-gray-500 mb-6">
-              <Link href="/" className="hover:underline">Home</Link>
+              <Link href="/" className="hover:underline">Beranda</Link>
               {' / '}
               <span className="text-gray-800">Direktori</span>
             </nav>

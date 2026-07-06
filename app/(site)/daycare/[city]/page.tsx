@@ -63,7 +63,7 @@ export default async function DaycareCityPage({
 
   const jsonLd = [
     breadcrumbSchema([
-      { name: 'Home', path: '/' },
+      { name: 'Beranda', path: '/' },
       { name: 'Daycare', path: `/${TYPE}` },
       { name: cityLabel, path },
     ]),
@@ -86,7 +86,7 @@ export default async function DaycareCityPage({
           <Container>
 
             <nav className="text-sm text-gray-500 mb-6">
-              <Link href="/" className="hover:underline">Home</Link>
+              <Link href="/" className="hover:underline">Beranda</Link>
               {' / '}
               <span>Daycare</span>
               {' / '}

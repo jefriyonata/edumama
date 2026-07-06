@@ -29,9 +29,9 @@ export default function Footer() {
 
             <p className="text-white/80 leading-7 text-sm max-w-sm">
 
-              Honest preschool reviews, parenting guides,
-              and early childhood education insights for
-              modern families.
+              Review preschool yang jujur, panduan parenting,
+              dan wawasan pendidikan anak usia dini untuk
+              keluarga masa kini.
 
             </p>
 
@@ -43,7 +43,7 @@ export default function Footer() {
 
             <p className="uppercase tracking-[0.2em] text-sm mb-5">
 
-              Explore
+              Jelajahi
 
             </p>
 
@@ -78,14 +78,15 @@ export default function Footer() {
 
             <p className="uppercase tracking-[0.2em] text-sm mb-5">
 
-              About
+              Tentang
 
             </p>
 
             <p className="text-sm text-white/80 leading-7">
 
-              Built for parents looking for trustworthy
-              early childhood education resources.
+              Dibuat untuk orang tua yang mencari sumber
+              informasi pendidikan anak usia dini yang
+              tepercaya.
 
             </p>
 
@@ -98,11 +99,11 @@ export default function Footer() {
         <div className="border-t border-white/20 mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/70">
 
           <p>
-            © {currentYear} Bersemai. All rights reserved.
+            © {currentYear} Bersemai. Hak cipta dilindungi.
           </p>
 
           <p>
-            Made with love
+            Dibuat dengan cinta
           </p>
 
         </div>

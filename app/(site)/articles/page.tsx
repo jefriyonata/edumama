@@ -9,7 +9,7 @@ import { buildMetadata } from '@/lib/seo'
 import { getAllArticles } from '@/lib/mdx'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Articles',
+  title: 'Artikel',
   description:
     'Kumpulan artikel parenting dan pendidikan anak usia dini dari Bersemai.',
   path: '/articles',
@@ -29,7 +29,7 @@ export default function ArticlesPage() {
           <div className="mb-12">
 
             <Heading level="h1">
-              Articles
+              Artikel
             </Heading>
 
           </div>

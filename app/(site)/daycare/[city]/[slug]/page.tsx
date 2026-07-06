@@ -100,7 +100,7 @@ export default async function DaycarePlacePage({
       sameAs,
     }),
     breadcrumbSchema([
-      { name: 'Home', path: '/' },
+      { name: 'Beranda', path: '/' },
       { name: 'Daycare', path: `/${TYPE}` },
       { name: place.cityLabel, path: `/${TYPE}/${city}` },
       { name: place.name, path },
@@ -118,7 +118,7 @@ export default async function DaycarePlacePage({
           <Container>
 
             <nav className="text-sm text-gray-500 mb-6">
-              <Link href="/" className="hover:underline">Home</Link>
+              <Link href="/" className="hover:underline">Beranda</Link>
               {' / '}
               <span>Daycare</span>
               {' / '}

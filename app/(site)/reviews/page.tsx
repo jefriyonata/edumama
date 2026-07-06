@@ -9,7 +9,7 @@ import { buildMetadata } from '@/lib/seo'
 import { getAllReviews } from '@/lib/mdx'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Reviews',
+  title: 'Review',
   description:
     'Review preschool dan program pendidikan anak usia dini dari Bersemai.',
   path: '/reviews',
@@ -29,7 +29,7 @@ export default function ReviewsPage() {
           <div className="mb-12">
 
             <Heading level="h1">
-              Reviews
+              Review
             </Heading>
 
           </div>

@@ -7,7 +7,7 @@ export const categories = [
 
   {
     slug: 'parenting-tips',
-    name: 'Parenting Tips',
+    name: 'Tips Parenting',
   },
 
   {

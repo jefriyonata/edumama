@@ -87,7 +87,7 @@ export default async function ArticlePage({
       authorName: getAuthor(author)?.name,
     }),
     breadcrumbSchema([
-      { name: 'Home', path: '/' },
+      { name: 'Beranda', path: '/' },
       { name: 'Articles', path: '/articles' },
       { name: title, path },
     ]),

@@ -88,7 +88,7 @@ export default async function ReviewPage({
       authorName: getAuthor(author)?.name,
     }),
     breadcrumbSchema([
-      { name: 'Home', path: '/' },
+      { name: 'Beranda', path: '/' },
       { name: 'Reviews', path: '/reviews' },
       { name: title, path },
     ]),
