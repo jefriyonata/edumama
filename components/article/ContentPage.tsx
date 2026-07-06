@@ -5,6 +5,7 @@ import FAQ from '@/components/mdx/FAQ'
 import SmartLink from '@/components/mdx/SmartLink'
 import ArticleLink from '@/components/mdx/ArticleLink'
 import ReviewLink from '@/components/mdx/ReviewLink'
+import ContentImage from '@/components/mdx/ContentImage'
 
 import { MDXRemote } from 'next-mdx-remote/rsc'
 
@@ -77,6 +78,8 @@ export default function ContentPage({
     Link: SmartLink,
     ArticleLink,
     ReviewLink,
+    // Route body images through next/image for automatic WebP/resizing.
+    img: ContentImage,
     table: (props) => (
       <div className="overflow-x-auto my-8">
         <table {...props} />
