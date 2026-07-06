@@ -158,22 +158,22 @@ export default config({
   // Storage is environment-dependent so the hosted CMS is never open:
   //  - dev (localhost only): 'local' — edit files on disk, no login. Safe
   //    because it's only reachable from your own machine.
-  //  - production: 'github' — the hosted /keystatic admin requires a GitHub
-  //    login and only users with WRITE access to the repo can edit. Needs a
-  //    GitHub App + KEYSTATIC_* env vars (see deploy setup).
+  //  - production: 'cloud' — the hosted /keystatic admin requires a
+  //    Keystatic Cloud login (email/password, no GitHub account needed).
+  //    Editors are invited from the dashboard at keystatic.cloud; commits
+  //    land in jefriyonata/edumama via the Keystatic Cloud GitHub App.
+  //    No KEYSTATIC_* env vars needed.
   //
   // IMPORTANT: gate ONLY on NODE_ENV. This config is imported by both the
   // server (API route) and the client admin bundle, and Next only inlines
   // NODE_ENV + NEXT_PUBLIC_* vars into the browser. Gating on a server-only
-  // var like KEYSTATIC_GITHUB_CLIENT_ID makes the CLIENT fall back to 'local'
-  // while the server stays 'github' — the mismatch 404s every collection
+  // var makes the CLIENT fall back to 'local' while the server stays remote
+  // — the mismatch 404s every collection
   // ("Unexpected token 'N', 'Not Found' is not valid JSON").
+  cloud: { project: 'bersemai/bersemai' },
   storage:
     process.env.NODE_ENV === 'production'
-      ? {
-          kind: 'github',
-          repo: { owner: 'jefriyonata', name: 'edumama' },
-        }
+      ? { kind: 'cloud' }
       : { kind: 'local' },
 
   ui: {
