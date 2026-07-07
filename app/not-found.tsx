@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
+import BaseHtml from '@/components/BaseHtml'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
@@ -11,12 +12,16 @@ export const metadata: Metadata = {
   title: 'Halaman Tidak Ditemukan',
 }
 
-// Global 404. Lives at the app root (outside the (site) route group), so it
-// renders Header/Footer itself to match the rest of the site.
+/**
+ * Global 404. With per-locale root layouts (no shared app/layout.tsx), the
+ * top-level not-found renders its own <html>/<body> via BaseHtml, wrapped in
+ * the Indonesian site chrome so it matches the rest of the (default) site.
+ */
 export default function NotFound() {
   return (
-    <>
-      <Header />
+    <BaseHtml lang="id">
+
+      <Header locale="id" />
 
       <main>
         <Section>
@@ -53,7 +58,8 @@ export default function NotFound() {
         </Section>
       </main>
 
-      <Footer />
-    </>
+      <Footer locale="id" />
+
+    </BaseHtml>
   )
 }

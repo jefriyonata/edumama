@@ -2,10 +2,18 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 
-const articlesDirectory = path.join(
-  process.cwd(),
-  'content/articles'
-)
+export type Locale = 'id' | 'en'
+
+/**
+ * Content lives per-locale: Indonesian at content/articles (root URLs),
+ * English at content/en/articles (/en/... URLs). The two are independent
+ * clusters, not translations of each other.
+ */
+function articlesDir(locale: Locale = 'id'): string {
+  return locale === 'en'
+    ? path.join(process.cwd(), 'content/en/articles')
+    : path.join(process.cwd(), 'content/articles')
+}
 
 /**
  * js-yaml (via gray-matter) parses unquoted YAML dates — e.g. Keystatic
@@ -112,19 +120,19 @@ function listEntries(directory: string) {
 }
 
 /** Resolve an article by its URL slug (the `[slug]` route param). */
-export function getArticleBySlug(slug: string) {
-  return findByUrlSlug(articlesDirectory, slug)
+export function getArticleBySlug(slug: string, locale: Locale = 'id') {
+  return findByUrlSlug(articlesDir(locale), slug)
 }
 
-export function getAllArticles() {
-  return listEntries(articlesDirectory)
+export function getAllArticles(locale: Locale = 'id') {
+  return listEntries(articlesDir(locale))
 }
 
 /** URL for an article referenced by ID (filename) — used by internal links. */
-export function getArticleUrl(id: string): string {
-  const parsed = readEntry(articlesDirectory, id)
+export function getArticleUrl(id: string, locale: Locale = 'id'): string {
+  const parsed = readEntry(articlesDir(locale), id)
   const slug = parsed ? urlSlugOf(id, parsed.data) : id
-  return `/articles/${slug}`
+  return locale === 'en' ? `/en/articles/${slug}` : `/articles/${slug}`
 }
 
 const reviewsDirectory = path.join(
@@ -186,11 +194,12 @@ export function extractFaqs(content: string): Faq[] {
 }
 
 export function getArticlesByCategory(
-  category: string
+  category: string,
+  locale: Locale = 'id',
 ) {
 
   const articles =
-    getAllArticles()
+    getAllArticles(locale)
 
   return articles.filter(
     (article) =>

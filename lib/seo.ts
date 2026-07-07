@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import type { Locale } from '@/lib/mdx'
 
 /**
  * Central SEO configuration for the whole site.
@@ -16,6 +17,26 @@ export const siteConfig = {
   defaultImage: '/images/bersemai-logo.png',
   logo: '/images/bersemai-logo.png',
   twitter: '@bersemai',
+}
+
+/** Per-locale metadata bits (html lang, OG locale, schema inLanguage, default description). */
+export const localeConfig: Record<
+  Locale,
+  { htmlLang: string; ogLocale: string; inLanguage: string; description: string }
+> = {
+  id: {
+    htmlLang: 'id',
+    ogLocale: 'id_ID',
+    inLanguage: 'id-ID',
+    description: siteConfig.description,
+  },
+  en: {
+    htmlLang: 'en',
+    ogLocale: 'en_US',
+    inLanguage: 'en-US',
+    description:
+      'Preschool guides, parenting tips, and early-childhood education insights for modern families.',
+  },
 }
 
 /** Build an absolute URL from a site-relative path. */
@@ -36,6 +57,10 @@ type BuildMetadataArgs = {
   authors?: string[]
   /** When true, emit robots noindex (still followed). */
   noindex?: boolean
+  /** Locale of the page — drives OG locale and the default description. */
+  locale?: Locale
+  /** hreflang alternates, e.g. { 'id-ID': '/', 'en-US': '/en', 'x-default': '/' }. */
+  languages?: Record<string, string>
 }
 
 /**
@@ -45,7 +70,7 @@ type BuildMetadataArgs = {
  */
 export function buildMetadata({
   title,
-  description = siteConfig.description,
+  description,
   path = '/',
   image,
   type = 'website',
@@ -53,14 +78,18 @@ export function buildMetadata({
   modifiedTime,
   authors,
   noindex,
+  locale = 'id',
+  languages,
 }: BuildMetadataArgs = {}): Metadata {
   const ogImage = image || siteConfig.defaultImage
+  const desc = description ?? localeConfig[locale].description
 
   return {
     title,
-    description,
+    description: desc,
     alternates: {
       canonical: path,
+      ...(languages ? { languages } : {}),
     },
     ...(noindex
       ? { robots: { index: false, follow: true } }
@@ -69,9 +98,9 @@ export function buildMetadata({
       type,
       url: path,
       siteName: siteConfig.name,
-      locale: siteConfig.locale,
+      locale: localeConfig[locale].ogLocale,
       title,
-      description,
+      description: desc,
       images: [{ url: ogImage }],
       ...(type === 'article'
         ? { publishedTime, modifiedTime, authors }
@@ -80,9 +109,35 @@ export function buildMetadata({
     twitter: {
       card: 'summary_large_image',
       title,
-      description,
+      description: desc,
       images: [ogImage],
     },
+  }
+}
+
+/**
+ * Base metadata for a per-locale root layout (metadataBase, title template,
+ * default OG). Each root layout ((id) and (en)) exports this for its locale.
+ */
+export function rootMetadata(locale: Locale): Metadata {
+  const cfg = localeConfig[locale]
+  return {
+    metadataBase: new URL(siteConfig.url),
+    title: { default: siteConfig.name, template: `%s | ${siteConfig.name}` },
+    description: cfg.description,
+    openGraph: {
+      type: 'website',
+      siteName: siteConfig.name,
+      locale: cfg.ogLocale,
+      url: locale === 'en' ? '/en' : '/',
+      images: [{ url: siteConfig.defaultImage }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      site: siteConfig.twitter,
+      images: [siteConfig.defaultImage],
+    },
+    robots: { index: true, follow: true },
   }
 }
 
@@ -103,14 +158,14 @@ export function organizationSchema(): JsonLd {
   }
 }
 
-/** WebSite schema with a search action. Use site-wide. */
-export function websiteSchema(): JsonLd {
+/** WebSite schema. Use site-wide, per locale. */
+export function websiteSchema(locale: Locale = 'id'): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: siteConfig.name,
-    url: siteConfig.url,
-    inLanguage: 'id-ID',
+    url: locale === 'en' ? `${siteConfig.url}/en` : siteConfig.url,
+    inLanguage: localeConfig[locale].inLanguage,
   }
 }
 
@@ -122,6 +177,7 @@ type ArticleSchemaArgs = {
   datePublished?: string
   dateModified?: string
   authorName?: string
+  locale?: Locale
 }
 
 /** Article schema for articles and review posts. */
@@ -133,12 +189,14 @@ export function articleSchema({
   datePublished,
   dateModified,
   authorName,
+  locale = 'id',
 }: ArticleSchemaArgs): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: title,
     description,
+    inLanguage: localeConfig[locale].inLanguage,
     image: absoluteUrl(image || siteConfig.defaultImage),
     datePublished,
     dateModified: dateModified || datePublished,

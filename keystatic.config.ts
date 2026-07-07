@@ -154,6 +154,64 @@ const seoFields = {
   }),
 }
 
+/**
+ * Shared schema for an article collection. Indonesian (content/articles) and
+ * English (content/en/articles) use the exact same shape; `urlBase` only tunes
+ * the example shown in the URL-slug helper text.
+ */
+function articleFields(urlBase: string) {
+  return {
+    title: fields.slug({
+      name: {
+        label: 'Title',
+        validation: { isRequired: true },
+      },
+    }),
+    draft: fields.checkbox({
+      label: 'Draft (hide from the live site)',
+      description:
+        'When on, this entry is unpublished: removed from all listings and the sitemap, and its URL returns 404. Uncheck to publish.',
+      defaultValue: false,
+    }),
+    urlSlug: fields.text({
+      label: 'URL slug (optional)',
+      description: `Overrides the URL path, e.g. "apa-itu-montessori" gives ${urlBase}apa-itu-montessori. Change this to change the URL — internal links to this page update automatically. Leave blank to use the entry ID (filename).`,
+    }),
+    description: fields.text({
+      label: 'Description',
+      multiline: true,
+    }),
+    date: fields.date({ label: 'Date' }),
+    author: fields.relationship({
+      label: 'Author',
+      collection: 'authors',
+      validation: { isRequired: true },
+    }),
+    category: fields.select({
+      label: 'Category',
+      options: categoryOptions,
+      defaultValue: categoryOptions[0]?.value ?? 'parenting-tips',
+    }),
+    image: fields.image({
+      label: 'Thumbnail',
+      directory: 'public/images/thumbnails',
+      publicPath: '/images/thumbnails',
+    }),
+    ...seoFields,
+    content: fields.mdx({
+      label: 'Body',
+      extension: 'mdx',
+      components: mdxComponents,
+      options: {
+        image: {
+          directory: 'public/images/content',
+          publicPath: '/images/content',
+        },
+      },
+    }),
+  }
+}
+
 export default config({
   // Storage is environment-dependent so the hosted CMS is never open:
   //  - dev (localhost only): 'local' — edit files on disk, no login. Safe
@@ -212,57 +270,17 @@ export default config({
       format: { data: 'yaml', contentField: 'content' },
       entryLayout: 'content',
       columns: ['title', 'date'],
-      schema: {
-        title: fields.slug({
-          name: {
-            label: 'Title',
-            validation: { isRequired: true },
-          },
-        }),
-        draft: fields.checkbox({
-          label: 'Draft (hide from the live site)',
-          description:
-            'When on, this entry is unpublished: removed from all listings and the sitemap, and its URL returns 404. Uncheck to publish.',
-          defaultValue: false,
-        }),
-        urlSlug: fields.text({
-          label: 'URL slug (optional)',
-          description:
-            'Overrides the URL path, e.g. "apa-itu-montessori" gives /articles/apa-itu-montessori. Change this to change the URL — internal links to this page update automatically. Leave blank to use the entry ID (filename).',
-        }),
-        description: fields.text({
-          label: 'Description',
-          multiline: true,
-        }),
-        date: fields.date({ label: 'Date' }),
-        author: fields.relationship({
-          label: 'Author',
-          collection: 'authors',
-          validation: { isRequired: true },
-        }),
-        category: fields.select({
-          label: 'Category',
-          options: categoryOptions,
-          defaultValue: categoryOptions[0]?.value ?? 'parenting-tips',
-        }),
-        image: fields.image({
-          label: 'Thumbnail',
-          directory: 'public/images/thumbnails',
-          publicPath: '/images/thumbnails',
-        }),
-        ...seoFields,
-        content: fields.mdx({
-          label: 'Body',
-          extension: 'mdx',
-          components: mdxComponents,
-          options: {
-            image: {
-              directory: 'public/images/content',
-              publicPath: '/images/content',
-            },
-          },
-        }),
-      },
+      schema: articleFields('/articles/'),
+    }),
+
+    articlesEn: collection({
+      label: 'Articles (EN)',
+      path: 'content/en/articles/*',
+      slugField: 'title',
+      format: { data: 'yaml', contentField: 'content' },
+      entryLayout: 'content',
+      columns: ['title', 'date'],
+      schema: articleFields('/en/articles/'),
     }),
 
     reviews: collection({

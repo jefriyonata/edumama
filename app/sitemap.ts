@@ -55,6 +55,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   )
 
+  // English site (/en) — static pages + published EN articles.
+  const enStaticRoutes: MetadataRoute.Sitemap = [
+    '/en',
+    '/en/articles',
+    '/en/about',
+  ].map((path) => ({
+    url: `${base}${path}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: path === '/en' ? 0.9 : 0.7,
+  }))
+
+  const enArticleRoutes: MetadataRoute.Sitemap = getAllArticles('en').map(
+    (article) => ({
+      url: `${base}/en/articles/${article.slug}`,
+      lastModified: article.frontmatter.date
+        ? new Date(article.frontmatter.date)
+        : new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    }),
+  )
+
   // Directory: type hubs (e.g. /daycare), city listings
   // (/daycare/[city]), and entry pages (/daycare/[city]/[slug]).
   const places = getAllPlaces()
@@ -96,6 +119,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...categoryRoutes,
     ...articleRoutes,
     ...reviewRoutes,
+    ...enStaticRoutes,
+    ...enArticleRoutes,
     ...directoryHubRoutes,
     ...directoryCityRoutes,
     ...directoryEntryRoutes,

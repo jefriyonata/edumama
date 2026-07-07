@@ -1,12 +1,16 @@
 import Image from 'next/image'
 import type { Author } from '@/lib/authors'
+import { getDictionary } from '@/lib/i18n/dictionaries'
+import type { Locale } from '@/lib/mdx'
 
 type AuthorCardProps = {
   author: Author
+  locale?: Locale
 }
 
 export default function AuthorCard({
   author,
+  locale = 'id',
 }: AuthorCardProps) {
 
   return (
@@ -15,7 +19,7 @@ export default function AuthorCard({
 
       <p className="text-sm uppercase tracking-[0.2em] text-gray-500 mb-6">
 
-        Ditulis Oleh
+        {getDictionary(locale).article.writtenBy}
 
       </p>
 

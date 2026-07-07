@@ -19,15 +19,18 @@ import AuthorCard from './AuthorCard'
 import { extractHeadings } from '@/lib/toc'
 
 import { getAuthor } from '@/lib/authors'
+import type { Locale } from '@/lib/mdx'
 
 type ContentPageProps = {
   frontmatter: any
   content: string
+  locale?: Locale
 }
 
 export default function ContentPage({
   frontmatter,
   content,
+  locale = 'id',
 }: ContentPageProps) {
 
   const headings =
@@ -42,6 +45,7 @@ export default function ContentPage({
       <ArticleHero
         frontmatter={frontmatter}
         author={author}
+        locale={locale}
       />
 
       <section className="max-w-7xl mx-auto px-6 py-10 lg:py-16">
@@ -76,7 +80,10 @@ export default function ContentPage({
     // opening in a new tab. Normal markdown links pass through unchanged.
     a: SmartLink,
     Link: SmartLink,
-    ArticleLink,
+    // Bind the locale so in-body internal links resolve to /en/... on EN pages.
+    ArticleLink: (props: { article?: string; children?: React.ReactNode }) => (
+      <ArticleLink {...props} locale={locale} />
+    ),
     ReviewLink,
     // Route body images through next/image for automatic WebP/resizing.
     img: ContentImage,
@@ -102,7 +109,7 @@ export default function ContentPage({
 
 <div className="mt-16">
 
-  {author && <AuthorCard author={author} />}
+  {author && <AuthorCard author={author} locale={locale} />}
 
 </div>
 

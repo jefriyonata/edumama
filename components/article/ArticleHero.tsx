@@ -1,13 +1,20 @@
 import Link from 'next/link'
+import { getDictionary } from '@/lib/i18n/dictionaries'
+import type { Locale } from '@/lib/mdx'
+
 type ArticleHeroProps = {
   frontmatter: any
   author: any
+  locale?: Locale
 }
 
 export default function ArticleHero({
   frontmatter,
   author,
+  locale = 'id',
 }: ArticleHeroProps) {
+
+  const dict = getDictionary(locale)
 
   return (
     <section className="bg-[#FA8072] text-white">
@@ -15,12 +22,18 @@ export default function ArticleHero({
       <div className="max-w-5xl mx-auto px-6 py-16 sm:py-24 lg:py-28 text-center">
 
         {frontmatter.category && (
-          <Link
-            href={`/category/${frontmatter.category}`}
-            className="inline-block uppercase tracking-[0.2em] sm:tracking-[0.25em] text-xs sm:text-sm mb-6 sm:mb-8 opacity-80 hover:opacity-100 transition"
-          >
-            {frontmatter.category.replace(/-/g, ' ')}
-          </Link>
+          locale === 'id' ? (
+            <Link
+              href={`/category/${frontmatter.category}`}
+              className="inline-block uppercase tracking-[0.2em] sm:tracking-[0.25em] text-xs sm:text-sm mb-6 sm:mb-8 opacity-80 hover:opacity-100 transition"
+            >
+              {frontmatter.category.replace(/-/g, ' ')}
+            </Link>
+          ) : (
+            <span className="inline-block uppercase tracking-[0.2em] sm:tracking-[0.25em] text-xs sm:text-sm mb-6 sm:mb-8 opacity-80">
+              {frontmatter.category.replace(/-/g, ' ')}
+            </span>
+          )
         )}
 
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-5 sm:mb-8 text-balance break-words">
@@ -38,7 +51,7 @@ export default function ArticleHero({
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm opacity-80">
 
           <span>
-            By {author?.name}
+            {dict.article.by} {author?.name}
           </span>
 
           <span>•</span>

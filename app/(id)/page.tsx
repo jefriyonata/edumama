@@ -19,6 +19,13 @@ export const metadata: Metadata = buildMetadata({
   description:
     'Temukan review preschool, panduan parenting, dan rekomendasi sekolah anak usia dini di Indonesia.',
   path: '/',
+  locale: 'id',
+  // hreflang: the two homepages correspond; content pages don't (independent clusters).
+  languages: {
+    'id-ID': '/',
+    'en-US': '/en',
+    'x-default': '/',
+  },
 })
 export default function HomePage() {
 

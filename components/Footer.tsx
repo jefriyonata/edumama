@@ -1,10 +1,26 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { navCategories } from '@/data/navigation'
+import { getDictionary, localeHome } from '@/lib/i18n/dictionaries'
+import type { Locale } from '@/lib/mdx'
 
-export default function Footer() {
+export default function Footer({ locale = 'id' }: { locale?: Locale }) {
 
   const currentYear = new Date().getFullYear()
+  const dict = getDictionary(locale)
+
+  // Explore links differ per locale: the ID footer surfaces the directory +
+  // category hubs; the EN footer (phase 1) only has Articles + About.
+  const exploreLinks =
+    locale === 'en'
+      ? [
+          { href: '/en/articles', label: dict.nav.articles },
+          { href: '/en/about', label: dict.nav.about },
+        ]
+      : [
+          { href: '/direktori', label: dict.nav.directory },
+          ...navCategories,
+        ]
 
   return (
     <footer className="bg-[#FA8072] text-white mt-24">
@@ -17,7 +33,7 @@ export default function Footer() {
 
           <div>
 
-            <Link href="/" className="inline-block mb-5">
+            <Link href={localeHome(locale)} className="inline-block mb-5">
               <Image
                 src="/images/bersemai-logo.png"
                 alt="Bersemai"
@@ -29,9 +45,7 @@ export default function Footer() {
 
             <p className="text-white/80 leading-7 text-sm max-w-sm">
 
-              Review preschool yang jujur, panduan parenting,
-              dan wawasan pendidikan anak usia dini untuk
-              keluarga masa kini.
+              {dict.footer.tagline}
 
             </p>
 
@@ -43,26 +57,20 @@ export default function Footer() {
 
             <p className="uppercase tracking-[0.2em] text-sm mb-5">
 
-              Jelajahi
+              {dict.footer.explore}
 
             </p>
 
             <ul className="space-y-3 text-sm text-white/80">
 
-              <li>
-                <Link href="/direktori" className="hover:text-white">
-                  Direktori
-                </Link>
-              </li>
-
-              {navCategories.map((category) => (
-                <li key={category.href}>
+              {exploreLinks.map((link) => (
+                <li key={link.href}>
 
                   <Link
-                    href={category.href}
+                    href={link.href}
                     className="hover:text-white"
                   >
-                    {category.label}
+                    {link.label}
                   </Link>
 
                 </li>
@@ -78,15 +86,13 @@ export default function Footer() {
 
             <p className="uppercase tracking-[0.2em] text-sm mb-5">
 
-              Tentang
+              {dict.footer.about}
 
             </p>
 
             <p className="text-sm text-white/80 leading-7">
 
-              Dibuat untuk orang tua yang mencari sumber
-              informasi pendidikan anak usia dini yang
-              tepercaya.
+              {dict.footer.aboutText}
 
             </p>
 
@@ -99,11 +105,11 @@ export default function Footer() {
         <div className="border-t border-white/20 mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/70">
 
           <p>
-            © {currentYear} Bersemai. Hak cipta dilindungi.
+            © {currentYear} Bersemai. {dict.footer.rights}
           </p>
 
           <p>
-            Dibuat dengan cinta
+            {dict.footer.madeWith}
           </p>
 
         </div>

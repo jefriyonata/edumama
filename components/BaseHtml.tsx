@@ -1,14 +1,13 @@
-import type { Metadata } from 'next'
 import Script from 'next/script'
+import { Inter, Fraunces } from 'next/font/google'
 
-import './globals.css'
+import '@/app/globals.css'
+
+import type { Locale } from '@/lib/mdx'
 
 // Google Tag Manager container ID.
 const GTM_ID = 'GTM-MB9CRM77'
 
-import { siteConfig } from '@/lib/seo'
-
-import { Inter, Fraunces } from 'next/font/google'
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
@@ -19,44 +18,21 @@ const fraunces = Fraunces({
   variable: '--font-fraunces',
 })
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-
-  title: {
-    default: 'Bersemai',
-    template: '%s | Bersemai',
-  },
-
-  description: siteConfig.description,
-
-  openGraph: {
-    type: 'website',
-    siteName: siteConfig.name,
-    locale: siteConfig.locale,
-    url: '/',
-    images: [{ url: siteConfig.defaultImage }],
-  },
-
-  twitter: {
-    card: 'summary_large_image',
-    site: siteConfig.twitter,
-    images: [siteConfig.defaultImage],
-  },
-
-  robots: {
-    index: true,
-    follow: true,
-  },
-}
-
-export default function RootLayout({
+/**
+ * The document shell (<html>/<body> + fonts + GTM), shared by every root
+ * layout. The App Router requires each root layout to render <html>/<body>;
+ * we have one per locale ((id), (en), keystatic) so `lang` can differ, and
+ * this component keeps that markup in a single place.
+ */
+export default function BaseHtml({
+  lang,
   children,
-}: Readonly<{
+}: {
+  lang: Locale
   children: React.ReactNode
-}>) {
-
+}) {
   return (
-    <html lang="id">
+    <html lang={lang}>
 
       {/* Google Tag Manager — loads as early as Next allows in the App Router. */}
       <Script id="gtm-init" strategy="afterInteractive">
@@ -67,9 +43,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','${GTM_ID}');`}
       </Script>
 
-      <body
-  className={`${inter.className} ${fraunces.variable}`}
->
+      <body className={`${inter.className} ${fraunces.variable}`}>
 
         {/* Google Tag Manager (noscript) */}
         <noscript>

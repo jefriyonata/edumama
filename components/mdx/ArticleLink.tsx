@@ -1,8 +1,11 @@
 import { getArticleUrl } from '@/lib/mdx'
+import type { Locale } from '@/lib/mdx'
 
 type ArticleLinkProps = {
   /** The referenced article's stable ID (filename), stored by the CMS. */
   article?: string
+  /** Locale of the resolved link target. Bound by ContentPage per locale. */
+  locale?: Locale
   children?: React.ReactNode
 }
 
@@ -13,6 +16,7 @@ type ArticleLinkProps = {
  */
 export default function ArticleLink({
   article,
+  locale = 'id',
   children,
 }: ArticleLinkProps) {
 
@@ -20,5 +24,5 @@ export default function ArticleLink({
     return <>{children}</>
   }
 
-  return <a href={getArticleUrl(article)}>{children}</a>
+  return <a href={getArticleUrl(article, locale)}>{children}</a>
 }
