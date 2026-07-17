@@ -101,6 +101,7 @@ export default async function EnArticlePage({
       <JsonLd data={jsonLd} />
 
       <ContentPage
+        id={article.id}
         frontmatter={article.frontmatter}
         content={article.content}
         locale="en"

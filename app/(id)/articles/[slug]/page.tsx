@@ -100,6 +100,7 @@ export default async function ArticlePage({
       <JsonLd data={jsonLd} />
 
       <ContentPage
+        id={article.id}
         frontmatter={article.frontmatter}
         content={article.content}
       />

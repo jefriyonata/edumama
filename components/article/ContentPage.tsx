@@ -15,6 +15,7 @@ import rehypeSlug from 'rehype-slug'
 import ArticleHero from './ArticleHero'
 import TableOfContents from './TableOfContents'
 import AuthorCard from './AuthorCard'
+import RelatedArticles from './RelatedArticles'
 
 import { extractHeadings } from '@/lib/toc'
 
@@ -25,12 +26,19 @@ type ContentPageProps = {
   frontmatter: any
   content: string
   locale?: Locale
+  /**
+   * Stable ID of the entry. Passed by the article pages only — supplying it
+   * renders the Related Articles grid. Reviews omit it, so they render
+   * without one.
+   */
+  id?: string
 }
 
 export default function ContentPage({
   frontmatter,
   content,
   locale = 'id',
+  id,
 }: ContentPageProps) {
 
   const headings =
@@ -110,6 +118,14 @@ export default function ContentPage({
 <div className="mt-16">
 
   {author && <AuthorCard author={author} locale={locale} />}
+
+  {id && (
+    <RelatedArticles
+      currentId={id}
+      category={frontmatter.category}
+      locale={locale}
+    />
+  )}
 
 </div>
 

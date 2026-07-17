@@ -24,7 +24,7 @@ export type Dict = {
     madeWith: string
   }
   home: { viewAll: string }
-  article: { writtenBy: string; by: string }
+  article: { writtenBy: string; by: string; related: string }
 }
 
 const id: Dict = {
@@ -47,7 +47,11 @@ const id: Dict = {
     madeWith: 'Dibuat dengan cinta',
   },
   home: { viewAll: 'Lihat Semua' },
-  article: { writtenBy: 'Ditulis Oleh', by: 'Oleh' },
+  article: {
+    writtenBy: 'Ditulis Oleh',
+    by: 'Oleh',
+    related: 'Artikel Terkait',
+  },
 }
 
 const en: Dict = {
@@ -70,7 +74,11 @@ const en: Dict = {
     madeWith: 'Made with love',
   },
   home: { viewAll: 'View All' },
-  article: { writtenBy: 'Written By', by: 'By' },
+  article: {
+    writtenBy: 'Written By',
+    by: 'By',
+    related: 'Related Articles',
+  },
 }
 
 const dictionaries: Record<Locale, Dict> = { id, en }
