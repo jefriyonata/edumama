@@ -11,6 +11,7 @@ export const metadata: Metadata = buildMetadata({
   title: `Direktori ${directory.label} — Segera Hadir`,
   description: directory.description,
   path: directory.href,
+  noindex: true,
 })
 
 export default function PlaygroundDirectoryPage() {

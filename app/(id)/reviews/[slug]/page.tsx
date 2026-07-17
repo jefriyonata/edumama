@@ -38,7 +38,7 @@ export async function generateMetadata({
     notFound()
   }
 
-  const { title, description, image, date, author, noindex } =
+  const { title, description, image, date, author, noindex, indexing } =
     review.frontmatter
 
   return buildMetadata({
@@ -51,7 +51,7 @@ export async function generateMetadata({
     authors: getAuthor(author)
       ? [getAuthor(author)!.name]
       : undefined,
-    noindex: Boolean(noindex),
+    noindex: indexing === 'noindex' || noindex === true,
   })
 
 }

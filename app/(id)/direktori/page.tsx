@@ -20,6 +20,7 @@ export const metadata: Metadata = buildMetadata({
   description:
     'Direktori Bersemai: telusuri daycare, preschool, bimbel, dan playground anak per kota di Indonesia.',
   path: '/direktori',
+  noindex: true,
 })
 
 export default function DirektoriPage() {

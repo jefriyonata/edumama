@@ -45,6 +45,7 @@ export async function generateMetadata({
     title: category?.name || 'Kategori',
     description: `Artikel kategori ${category?.name} di Bersemai.`,
     path: `/category/${slug}`,
+    noindex: true,
   })
 
 }

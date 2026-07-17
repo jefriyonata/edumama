@@ -21,6 +21,7 @@ export const metadata: Metadata = buildMetadata({
   description:
     'Direktori daycare Bersemai: telusuri tempat penitipan anak per kota, lengkap dengan lokasi, kurikulum, usia, fasilitas, dan kontak.',
   path: `/${TYPE}`,
+  noindex: true,
 })
 
 export default function DaycareDirectoryPage() {

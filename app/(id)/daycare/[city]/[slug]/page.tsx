@@ -45,6 +45,7 @@ export async function generateMetadata({
       place.summary ||
       `${place.name}, daycare di ${place.district || place.cityLabel}. Lokasi, kurikulum, usia, fasilitas, dan kontak.`,
     path: `/${TYPE}/${city}/${slug}`,
+    noindex: true,
   })
 }
 

@@ -42,6 +42,7 @@ export async function generateMetadata({
     title: `Daycare ${cityLabel} — Direktori Tempat Penitipan Anak`,
     description: `Direktori daycare di ${cityLabel}: lokasi, kurikulum, usia, fasilitas, dan kontak. Bandingkan tempat penitipan anak terbaik di ${cityLabel}.`,
     path: `/${TYPE}/${city}`,
+    noindex: true,
   })
 }
 
