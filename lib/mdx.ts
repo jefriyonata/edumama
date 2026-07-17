@@ -43,13 +43,14 @@ function normalizeFrontmatter(
 }
 
 /**
- * Unpublished entries have `draft: true` in their frontmatter. Drafts are
- * excluded from every listing, the sitemap, and static generation, and
- * their URLs return 404 — but the file stays in the repo/CMS so it can be
- * polished and published later by unchecking the field.
+ * Unpublished entries have `status: draft` in their frontmatter (legacy
+ * entries may still use `draft: true`). Drafts are excluded from every
+ * listing, the sitemap, and static generation, and their URLs return 404 —
+ * but the file stays in the repo/CMS so it can be polished and published
+ * later by switching the status field.
  */
 function isDraft(data: Record<string, any>): boolean {
-  return data.draft === true
+  return data.status === 'draft' || data.draft === true
 }
 
 /**
@@ -116,7 +117,7 @@ function listEntries(directory: string) {
         frontmatter: normalizeFrontmatter(data),
       }
     })
-    .filter((entry) => entry.frontmatter.draft !== true)
+    .filter((entry) => !isDraft(entry.frontmatter))
 }
 
 /** Resolve an article by its URL slug (the `[slug]` route param). */

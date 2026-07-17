@@ -140,11 +140,15 @@ const mdxComponents = {
  * collection's schema. Consumed by the page's generateMetadata / JSON-LD.
  */
 const seoFields = {
-  noindex: fields.checkbox({
-    label: 'Hide from search engines (noindex)',
+  indexing: fields.select({
+    label: 'Indexing',
     description:
-      'Enable to keep this page out of Google (robots: noindex, follow).',
-    defaultValue: false,
+      'Noindex hides this page from search engines (robots: noindex, follow).',
+    options: [
+      { label: 'Index', value: 'index' },
+      { label: 'Noindex', value: 'noindex' },
+    ],
+    defaultValue: 'index',
   }),
   customSchema: fields.text({
     label: 'Custom JSON-LD schema (optional)',
@@ -167,11 +171,15 @@ function articleFields(urlBase: string) {
         validation: { isRequired: true },
       },
     }),
-    draft: fields.checkbox({
-      label: 'Draft (hide from the live site)',
+    status: fields.select({
+      label: 'Status',
       description:
-        'When on, this entry is unpublished: removed from all listings and the sitemap, and its URL returns 404. Uncheck to publish.',
-      defaultValue: false,
+        'Draft entries are hidden from the live site: removed from all listings and the sitemap, and their URL returns 404.',
+      options: [
+        { label: 'Published', value: 'published' },
+        { label: 'Draft', value: 'draft' },
+      ],
+      defaultValue: 'published',
     }),
     urlSlug: fields.text({
       label: 'URL slug (optional)',
@@ -269,7 +277,7 @@ export default config({
       slugField: 'title',
       format: { data: 'yaml', contentField: 'content' },
       entryLayout: 'content',
-      columns: ['title', 'date'],
+      columns: ['title', 'date', 'status', 'indexing'],
       schema: articleFields('/articles/'),
     }),
 
@@ -279,7 +287,7 @@ export default config({
       slugField: 'title',
       format: { data: 'yaml', contentField: 'content' },
       entryLayout: 'content',
-      columns: ['title', 'date'],
+      columns: ['title', 'date', 'status', 'indexing'],
       schema: articleFields('/en/articles/'),
     }),
 
@@ -289,7 +297,7 @@ export default config({
       slugField: 'title',
       format: { data: 'yaml', contentField: 'content' },
       entryLayout: 'content',
-      columns: ['title', 'date'],
+      columns: ['title', 'date', 'status', 'indexing'],
       schema: {
         title: fields.slug({
           name: {
@@ -297,11 +305,15 @@ export default config({
             validation: { isRequired: true },
           },
         }),
-        draft: fields.checkbox({
-          label: 'Draft (hide from the live site)',
+        status: fields.select({
+          label: 'Status',
           description:
-            'When on, this entry is unpublished: removed from all listings and the sitemap, and its URL returns 404. Uncheck to publish.',
-          defaultValue: false,
+            'Draft entries are hidden from the live site: removed from all listings and the sitemap, and their URL returns 404.',
+          options: [
+            { label: 'Published', value: 'published' },
+            { label: 'Draft', value: 'draft' },
+          ],
+          defaultValue: 'published',
         }),
         urlSlug: fields.text({
           label: 'URL slug (optional)',
