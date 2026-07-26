@@ -10,6 +10,10 @@ import {
 import { directories } from '@/data/directories'
 import { getDictionary, localeHome } from '@/lib/i18n/dictionaries'
 import type { Locale } from '@/lib/mdx'
+import {
+  LanguageSwitcherDesktop,
+  LanguageSwitcherMobile,
+} from '@/components/LanguageSwitcher'
 
 const LOGO_SRC = '/images/bersemai-logo.png'
 
@@ -18,9 +22,6 @@ export default function Header({ locale = 'id' }: { locale?: Locale }) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const dict = getDictionary(locale)
-  const otherLocale: Locale = locale === 'en' ? 'id' : 'en'
-  const switchHref = localeHome(otherLocale)
-  const switchLabel = otherLocale.toUpperCase()
 
   return (
     <header className="bg-[#FA8072] text-white">
@@ -133,13 +134,7 @@ export default function Header({ locale = 'id' }: { locale?: Locale }) {
               </Link>
             )}
 
-            <Link
-              href={switchHref}
-              className="whitespace-nowrap font-semibold opacity-90 hover:opacity-100 transition"
-              aria-label={`Switch language to ${switchLabel}`}
-            >
-              {switchLabel}
-            </Link>
+            <LanguageSwitcherDesktop locale={locale} />
 
           </nav>
 
@@ -261,13 +256,10 @@ export default function Header({ locale = 'id' }: { locale?: Locale }) {
               </>
             )}
 
-            <Link
-              href={switchHref}
-              onClick={() => setMenuOpen(false)}
-              className="py-3 font-semibold hover:opacity-80 transition"
-            >
-              {switchLabel}
-            </Link>
+            <LanguageSwitcherMobile
+              locale={locale}
+              onNavigate={() => setMenuOpen(false)}
+            />
 
           </nav>
         )}
