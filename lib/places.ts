@@ -7,6 +7,7 @@
  */
 
 import { daycarePlaces } from '@/data/places/daycare'
+import { preschoolJakartaPlaces } from '@/data/places/preschool-jakarta'
 
 export type PlaceType =
   | 'daycare'
@@ -53,6 +54,9 @@ export type Place = {
   googleReviewCount?: number
   googleMapsUrl?: string
 
+  /** Photo URLs/paths for the entry gallery (site-relative or absolute). */
+  images?: string[]
+
   /** Editorial value-add (our moat). */
   summary?: string
   pros?: string[]
@@ -68,6 +72,7 @@ export type Place = {
 /** All places across every type. Add new type files here. */
 const allPlaces: Place[] = [
   ...daycarePlaces,
+  ...preschoolJakartaPlaces,
 ]
 
 export const placeTypeLabels: Record<PlaceType, string> = {

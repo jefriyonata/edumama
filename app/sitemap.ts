@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next'
 
 import { siteConfig } from '@/lib/seo'
 import { getAllArticles, getAllReviews } from '@/lib/mdx'
+import { getCitiesForType, getPlacesByType } from '@/lib/places'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteConfig.url
@@ -66,11 +67,37 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   )
 
+  // EN preschool directory (indexable, unlike the noindex ID /daycare directory):
+  // hub + per-city listings + per-school entries.
+  const enPreschoolRoutes: MetadataRoute.Sitemap = [
+    {
+      url: `${base}/en/preschools`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    },
+    ...getCitiesForType('preschool').map(({ city }) => ({
+      url: `${base}/en/preschools/${city}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    })),
+    ...getPlacesByType('preschool').map((place) => ({
+      url: `${base}/en/preschools/${place.city}/${place.slug}`,
+      lastModified: place.lastVerified
+        ? new Date(place.lastVerified)
+        : new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
+  ]
+
   return [
     ...staticRoutes,
     ...articleRoutes,
     ...reviewRoutes,
     ...enStaticRoutes,
     ...enArticleRoutes,
+    ...enPreschoolRoutes,
   ]
 }

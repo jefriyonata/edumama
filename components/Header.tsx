@@ -92,12 +92,20 @@ export default function Header({ locale = 'id' }: { locale?: Locale }) {
                 ))}
               </>
             ) : (
-              <Link
-                href="/en/articles"
-                className="whitespace-nowrap hover:opacity-80 transition"
-              >
-                {dict.nav.articles}
-              </Link>
+              <>
+                <Link
+                  href="/en/preschools"
+                  className="whitespace-nowrap hover:opacity-80 transition"
+                >
+                  {dict.nav.preschools}
+                </Link>
+                <Link
+                  href="/en/articles"
+                  className="whitespace-nowrap hover:opacity-80 transition"
+                >
+                  {dict.nav.articles}
+                </Link>
+              </>
             )}
 
           </nav>
@@ -239,6 +247,13 @@ export default function Header({ locale = 'id' }: { locale?: Locale }) {
               </>
             ) : (
               <>
+                <Link
+                  href="/en/preschools"
+                  onClick={() => setMenuOpen(false)}
+                  className="py-3 hover:opacity-80 transition"
+                >
+                  {dict.nav.preschools}
+                </Link>
                 <Link
                   href="/en/articles"
                   onClick={() => setMenuOpen(false)}

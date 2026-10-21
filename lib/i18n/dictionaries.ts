@@ -9,6 +9,7 @@ import type { Locale } from '@/lib/mdx'
 export type Dict = {
   nav: {
     directory: string
+    preschools: string
     articles: string
     about: string
     comingSoon: string
@@ -30,6 +31,7 @@ export type Dict = {
 const id: Dict = {
   nav: {
     directory: 'Direktori',
+    preschools: 'Preschool',
     articles: 'Artikel',
     about: 'Tentang Kami',
     comingSoon: 'Segera',
@@ -57,6 +59,7 @@ const id: Dict = {
 const en: Dict = {
   nav: {
     directory: 'Directory',
+    preschools: 'Preschools',
     articles: 'Articles',
     about: 'About',
     comingSoon: 'Soon',

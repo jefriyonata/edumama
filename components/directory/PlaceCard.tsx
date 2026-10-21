@@ -1,9 +1,22 @@
 import Link from 'next/link'
 import type { Place } from '@/lib/places'
+import type { Locale } from '@/lib/mdx'
 
-export default function PlaceCard({ place }: { place: Place }) {
+export default function PlaceCard({
+  place,
+  locale = 'id',
+}: {
+  place: Place
+  locale?: Locale
+}) {
 
-  const href = `/${place.type}/${place.city}/${place.slug}`
+  const href =
+    locale === 'en'
+      ? `/en/preschools/${place.city}/${place.slug}`
+      : `/${place.type}/${place.city}/${place.slug}`
+
+  const detailLabel = locale === 'en' ? 'View details →' : 'Lihat detail →'
+  const numberLocale = locale === 'en' ? 'en-US' : 'id-ID'
 
   return (
     <article className="group border rounded-2xl p-6 bg-white shadow-sm hover:shadow-md transition flex flex-col">
@@ -18,7 +31,7 @@ export default function PlaceCard({ place }: { place: Place }) {
 
         {typeof place.googleRating === 'number' && (
           <span className="shrink-0 text-sm font-semibold whitespace-nowrap">
-            ⭐ {place.googleRating.toLocaleString('id-ID')}
+            ⭐ {place.googleRating.toLocaleString(numberLocale)}
             {place.googleReviewCount
               ? ` (${place.googleReviewCount})`
               : ''}
@@ -57,7 +70,7 @@ export default function PlaceCard({ place }: { place: Place }) {
           href={href}
           className="font-semibold text-[#FA8072] hover:underline"
         >
-          Lihat detail →
+          {detailLabel}
         </Link>
         {place.ageRange && (
           <span className="text-gray-400">{place.ageRange}</span>
