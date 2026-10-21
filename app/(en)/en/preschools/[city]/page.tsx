@@ -42,9 +42,15 @@ export async function generateMetadata({
     return buildMetadata({ title: 'Preschools', locale: 'en' })
   }
 
+  const isJakarta = city === 'jakarta'
+
   return buildMetadata({
-    title: `Preschools & Kindergartens in ${cityLabel}`,
-    description: `A directory of preschools and kindergartens in ${cityLabel}: curriculum, age range, location, and website for each school. Compare your options in one place.`,
+    title: isJakarta
+      ? 'Best Preschools & Kindergartens in Jakarta for Expat Families'
+      : `Preschools & Kindergartens in ${cityLabel}`,
+    description: isJakarta
+      ? 'Compare the top international preschools and kindergartens in Jakarta for expat families — curriculum, ages, location, opening hours and contact for each — plus local terms, curricula, fees, best areas and FAQs.'
+      : `A directory of preschools and kindergartens in ${cityLabel}: curriculum, age range, location, and website for each school. Compare your options in one place.`,
     path: `/en/preschools/${city}`,
     locale: 'en',
   })
@@ -102,16 +108,24 @@ export default async function PreschoolCityPage({
 
             <div className="mb-4">
               <Heading level="h1">
-                Preschools &amp; Kindergartens in {cityLabel}
+                {isJakarta
+                  ? 'Best Preschools & Kindergartens in Jakarta for Expat Families'
+                  : `Preschools & Kindergartens in ${cityLabel}`}
               </Heading>
             </div>
 
-            <p className="text-lg text-gray-600 max-w-3xl mb-10">
+            <p className="text-lg text-gray-600 max-w-3xl mb-12">
               {places.length} preschools and kindergartens in {cityLabel}, with
               curriculum, age range, location, and website for each. Details are
               compiled from public sources — please confirm with the school
               before enrolling.
             </p>
+
+            <h2 className="text-3xl font-bold mb-6">
+              {isJakarta
+                ? 'List of Top International Preschools & Kindergarten in Jakarta for Expat Families'
+                : `Preschools & Kindergartens in ${cityLabel}`}
+            </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {places.map((place) => (
