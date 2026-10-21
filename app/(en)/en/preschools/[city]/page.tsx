@@ -46,10 +46,10 @@ export async function generateMetadata({
 
   return buildMetadata({
     title: isJakarta
-      ? 'Best Preschools & Kindergartens in Jakarta for Expat Families'
+      ? 'Leading International Preschools & Kindergarten in Jakarta, Indonesia (2027)'
       : `Preschools & Kindergartens in ${cityLabel}`,
     description: isJakarta
-      ? 'Compare the top international preschools and kindergartens in Jakarta for expat families — curriculum, ages, location, opening hours and contact for each — plus local terms, curricula, fees, best areas and FAQs.'
+      ? 'A guide to the leading international preschools and kindergartens in Jakarta, Indonesia — curriculum, ages, location, opening hours and contact for each school, plus fees, best areas and FAQs for expat families.'
       : `A directory of preschools and kindergartens in ${cityLabel}: curriculum, age range, location, and website for each school. Compare your options in one place.`,
     path: `/en/preschools/${city}`,
     locale: 'en',
@@ -109,7 +109,7 @@ export default async function PreschoolCityPage({
             <div className="mb-4">
               <Heading level="h1">
                 {isJakarta
-                  ? 'Best Preschools & Kindergartens in Jakarta for Expat Families'
+                  ? 'Leading International Preschools & Kindergarten in Jakarta, Indonesia (2027)'
                   : `Preschools & Kindergartens in ${cityLabel}`}
               </Heading>
             </div>
